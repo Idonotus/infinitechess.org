@@ -65,13 +65,14 @@ const organizedlines = {
         
         // Organize by line
         let lines = gamefile.startSnapshot.slidingPossible
-        for (let i = 0; i<lines.length; i++) {
-            const line = lines[i]
+        for (const line of lines) {
             key = organizedlines.getKeyFromLine(line,coords)
             const strline = math.getKeyFromCoords(line)
             // Is line initialized
             if (!gamefile.piecesOrganizedByLines[strline][key]) gamefile.piecesOrganizedByLines[strline][key] = []
-            gamefile.piecesOrganizedByLines[strline][key].push(piece)
+            let oline =gamefile.piecesOrganizedByLines[strline][key]
+            let i = organizedlines.getInsertIndexOfOLine(oline, coords, line[0] === 0)[1]
+            oline.splice(i, 0, piece)
         }
         
     },
@@ -89,23 +90,69 @@ const organizedlines = {
         for (let i = 0; i<lines.length; i++) {
             const line = lines[i]
             key = organizedlines.getKeyFromLine(line,coords)
-            removePieceFromLine(gamefile.piecesOrganizedByLines[line],key)
+            removePieceFromLine(gamefile.piecesOrganizedByLines[line],key, line[0]===0)
         }
 
         // Takes a line from a property of an organized piece list, deletes the piece at specified coords
-        function removePieceFromLine (organizedPieces, lineKey) {
+        function removePieceFromLine (organizedPieces, lineKey, lineIsVertical) {
             const line = organizedPieces[lineKey]
+            let i = organizedlines.getIndexOfOLine(line, coords, lineIsVertical)
 
-            for (let i = 0; i < line.length; i++) {
-                const thisPieceCoords = line[i].coords
-                if (thisPieceCoords[0] === coords[0] && thisPieceCoords[1] === coords[1]) {
-                    line.splice(i, 1) // Delete
-                    // If the line length is now 0, remove itself from the organizedPieces
-                    if (line.length === 0) delete organizedPieces[lineKey];
-                    break;
-                }
+            line.splice(i, 1) // Delete
+
+            // If the line length is now 0, remove itself from the organizedPieces
+            if (line.length === 0) delete organizedPieces[lineKey];
+        }
+    },
+
+    /**
+     * 
+     * @param {Array} organizedLine 
+     * @param {Number[]} coords 
+     * @param {Boolean} lineIsVertical 
+     * @returns {Number|undefined}
+     */
+    getIndexOfOLine: function(organizedLine, coords, lineIsVertical) {
+        const axis = lineIsVertical ? 1 : 0;
+        const searchMag = coords[axis];
+        let min = 0;
+        let max = organizedLine.length - 1;
+        while ( min <= max ) {
+            let mid = (( max - min ) >> 1 ) + min;
+            let midMag = organizedLine[mid].coords[axis];
+            if (midMag === searchMag) {
+                return mid;
+            } else if (midMag > searchMag) {
+                max = mid;
+            } else {
+                min = mid + 1;
             }
         }
+        return undefined;
+    },
+
+    /**
+     * 
+     * @param {Array} organizedLine 
+     * @param {Number[]} coords 
+     * @param {Boolean} lineIsVertical 
+     * @returns {Number[]}
+     */
+    getInsertIndexOfOLine: function(organizedLine, coords, lineIsVertical) {
+        const axis = lineIsVertical ? 1 : 0;
+        const searchMag = coords[axis];
+        let min = -1;
+        let max = organizedLine.length;
+        while ( max - min !== 1 ) {
+            let mid = (( max - min ) >> 1 ) + min;
+            let midMag = organizedLine[mid].coords[axis];
+            if (midMag > searchMag) {
+                max = mid;
+            } else {
+                min = mid;
+            }
+        }
+        return [min,max];
     },
 
     initUndefineds: function(gamefile) {

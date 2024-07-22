@@ -112,12 +112,12 @@ const organizedlines = {
      * @param {Boolean} lineIsVertical 
      * @returns {Number|undefined}
      */
-    getIndexOfOLine: function(organizedLine, coords, lineIsVertical) {
+    getIndexOfOLine: function(organizedLine, coords, lineIsVertical, min = 0, max = organizedLine.length-1) {
         const axis = lineIsVertical ? 1 : 0;
         const searchMag = coords[axis];
-        let min = 0;
-        let max = organizedLine.length - 1;
-        while ( min <= max ) {
+        let c = 0
+        const maxiter = Math.log2(max-min+1)
+        while ( min <= max && c<maxiter) {
             let mid = (( max - min ) >> 1 ) + min;
             let refCoords = organizedLine[mid].coords
             let midMag = refCoords[axis];
@@ -129,6 +129,7 @@ const organizedlines = {
                 min = mid + 1;
             }
         }
+        if (c>maxiter) {debugger;}
         return undefined;
     },
 
@@ -141,12 +142,13 @@ const organizedlines = {
      * @param {Boolean} lineIsVertical 
      * @returns {Number[]}
      */
-    getInsertIndexOfOLine: function(organizedLine, coords, lineIsVertical) {
+    getInsertIndexOfOLine: function(organizedLine, coords, lineIsVertical, min = -1, max = organizedLine.length) {
+        if (organizedLine.length===0) return 0
         const axis = lineIsVertical ? 1 : 0;
         const searchMag = coords[axis];
-        let min = -1;
-        let max = organizedLine.length;
-        while ( max - min !== 1 ) {
+        const maxiter = Math.log2(max-min + 1) + 1
+        let c = 0;
+        while ( max - min !== 1 && c<maxiter) {
             let mid = (( max - min ) >> 1 ) + min;
             let midMag = organizedLine[mid].coords[axis];
             if (midMag > searchMag) {
@@ -154,7 +156,9 @@ const organizedlines = {
             } else {
                 min = mid;
             }
+            c++
         }
+        if (c>maxiter) {debugger;}
         return max;
     },
 
@@ -292,7 +296,6 @@ const organizedlines = {
     },
 
     getEmptyTypeState() {
-
         const state = {}
 
         // White and Black

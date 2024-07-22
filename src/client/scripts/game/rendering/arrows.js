@@ -113,8 +113,12 @@ const arrows = (function() {
             const boardSlidesEnd = Math.max(boardSlidesLeft, boardSlidesRight);
             for (const key in gamefile.piecesOrganizedByLines[linestr]) {
                 const intsects = key.split("|").map(Number)
-                if (boardSlidesStart > intsects || boardSlidesEnd < intsects) continue;
-                const pieces = calcPiecesOffScreen(line, gamefile.piecesOrganizedByLines[linestr][key])
+                
+                // TODO: find out why there are innacuracies of when arrows are rendered
+                // problem when close up so not a huge issue
+                if (boardSlidesStart > intsects[0] || boardSlidesEnd < intsects[0]) continue;
+
+                const pieces = calcPiecesOffScreen(line, intsects[0], gamefile.piecesOrganizedByLines[linestr][key])
 
                 if (math.isEmpty(pieces)) continue;
 
@@ -124,35 +128,27 @@ const arrows = (function() {
             }
         }
 
-        function calcPiecesOffScreen(line, organizedline) {
+        function calcPiecesOffScreen(line, c, organizedline) {
 
-            const rightCorner = math.getCornerOfBoundingBox(paddedBoundingBox, math.getAABBCornerOfLine(line,false));
+            const rightCorner = math.getAABBCornerOfLine(line,false);
+            const leftCorner  = math.getAABBCornerOfLine(line,true);
+            const insectLeft = math.getLineIntersectionEntryTile(line[0], line[1], c, paddedBoundingBox, leftCorner)
+            const insectRight = math.getLineIntersectionEntryTile(line[0], line[1], c, paddedBoundingBox, rightCorner)
+            insectLeft[0]-=1
+            insectLeft[1]-=1
 
-            let left;
-            let right;
-            for (var piece of organizedline) {
-                if (!piece.coords) continue;
-                
-                // Is the piece off-screen?
-                if (math.boxContainsSquare(boundingBox, piece.coords)) continue;
-                
-                const x = piece.coords[0];
-                const y = piece.coords[1];
-                const axis = line[0] == 0 ? 1 : 0;
-
-                const rightSide = x > paddedBoundingBox.right || y > rightCorner[1] == (rightCorner[1]==paddedBoundingBox.top);
-                if (rightSide) {
-                    if (!right) right = piece;
-                    else if (piece.coords[axis]<right.coords[axis]) right = piece;
-                } else {
-                    if (!left) left = piece;
-                    else if (piece.coords[axis]>left.coords[axis]) left = piece;
-                }
-            }
+            const leftI = organizedlines.getInsertIndexOfOLine(organizedline, insectLeft, line[0] === 0)
+            const rightI = organizedlines.getInsertIndexOfOLine(organizedline, insectRight, line[0] === 0)
 
             const dirs = {}
-            if (right) dirs["r"]=right
-            if (left) dirs["l"]=left
+
+            if (rightI<organizedline.length) {
+                dirs["r"] = organizedline[rightI]
+            }
+            if (leftI-1>=0) {
+                dirs["l"] = organizedline[leftI-1]
+            }
+
             return dirs
         }
 

@@ -154,28 +154,41 @@ const checkdetection = (function(){
         const directionKey = math.getKeyFromCoords(direction); // 'dx,dy'
         let foundCheckersCount = 0;
 
-        // Iterate through every piece on the line, and test if they can attack our square
-        for (const thisPiece of line) { // { coords, type }
+        let posti = organizedlines.getInsertIndexOfOLine(line, coords, direction[0]===0)
+        let precoords = [coords[0]-1,coords[1]-1]
+        let prei = organizedlines.getInsertIndexOfOLine(line, precoords, direction[0]===0, -1, posti)-1
 
-            const thisPieceColor = math.getPieceColorFromType(thisPiece.type)
-            if (color === thisPieceColor) continue; // Same team, can't capture us, CONTINUE to next piece!
-            if (thisPieceColor === 'neutral') continue; // Neutrals can't move, that means they can't make captures, right?
-
-            const thisPieceMoveset = legalmoves.getPieceMoveset(gamefile, thisPiece.type)
-
-            if (!thisPieceMoveset.sliding) continue; // Piece has no sliding movesets.
-            const moveset = thisPieceMoveset.sliding[directionKey];
-            if (!moveset) continue; // Piece can't slide in the direction our line is going
-            const thisPieceLegalSlide = legalmoves.slide_CalcLegalLimit(line, direction, moveset, thisPiece.coords, thisPieceColor)
-            if (!thisPieceLegalSlide) continue; // This piece can't move in the direction of this line, NEXT piece!
-
-            if (!legalmoves.doesSlidingMovesetContainSquare(thisPieceLegalSlide, direction, thisPiece.coords, coords)) continue; // This piece can't slide so far as to reach us, NEXT piece!
-
-            // This piece is attacking this square!
-
+        if (prei < 0) {} else if (isAttacker(line[prei])) {
+            let thisPiece = line[prei]
             if (!attackers) return true; // Attackers array isn't being tracked, just insta-return to save compute not finding other attackers!
             foundCheckersCount++;
             appendAttackerToList(attackers, { coords: thisPiece.coords, slidingCheck: true })
+        }
+
+        if (posti >= line.length) {} else if (isAttacker(line[posti])) {
+            let thisPiece = line[posti]
+            if (!attackers) return true; // Attackers array isn't being tracked, just insta-return to save compute not finding other attackers!
+            foundCheckersCount++;
+            appendAttackerToList(attackers, { coords: thisPiece.coords, slidingCheck: true })
+        }
+
+        function isAttacker(thisPiece) {
+            const thisPieceColor = math.getPieceColorFromType(thisPiece.type)
+            if (color === thisPieceColor) return false; // Same team, can't capture us, CONTINUE to next piece!
+            if (thisPieceColor === 'neutral') return false; // Neutrals can't move, that means they can't make captures, right?
+
+            const thisPieceMoveset = legalmoves.getPieceMoveset(gamefile, thisPiece.type)
+
+            if (!thisPieceMoveset.sliding) return false; // Piece has no sliding movesets.
+            const moveset = thisPieceMoveset.sliding[directionKey];
+            if (!moveset) return false; // Piece can't slide in the direction our line is going
+            const thisPieceLegalSlide = legalmoves.slide_CalcLegalLimit(line, direction, moveset, thisPiece.coords, thisPieceColor)
+            if (!thisPieceLegalSlide) return false; // This piece can't move in the direction of this line, NEXT piece!
+
+            if (!legalmoves.doesSlidingMovesetContainSquare(thisPieceLegalSlide, direction, thisPiece.coords, coords)) return false; // This piece can't slide so far as to reach us, NEXT piece!
+
+            // This piece is attacking this square!
+            return true
         }
 
         return foundCheckersCount > 0;

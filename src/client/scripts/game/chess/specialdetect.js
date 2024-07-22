@@ -56,12 +56,14 @@ const specialdetect = (function() {
 
         let left = -Infinity; // Piece directly left of king. (Infinity if none)
         let right = Infinity; // Piece directly right of king. (Infinity if none)
-        for (let i = 0; i < row.length; i++) {
-            const thisPiece = row[i]; // { type, coords }
-            const thisCoord = thisPiece.coords;
 
-            if      (thisCoord[0] < x && thisCoord[0] > left)  left  = thisCoord[0];
-            else if (thisCoord[0] > x && thisCoord[0] < right) right = thisCoord[0];
+        const i = organizedlines.getIndexOfOLine(row, coords, false)
+        // There is a piece to the left
+        if (i > 0) {
+            left = row[i-1].coords[0]
+        }
+        if (i < row.length-1) {
+            right = row[i+1].coords[0]
         }
 
         const leftDist = x - left;

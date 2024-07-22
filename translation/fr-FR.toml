@@ -1,6 +1,6 @@
 name = "Français" # Name of language
 direction = "ltr"
-version = "1.0.1"
+version = "5"
 
 [header]
 home = "Accueil"
@@ -34,7 +34,7 @@ what_is_it_pargaraphs = [
 "Comme vous pouvez l'imaginer, il y a une infinité de positions de départ possibles dont beaucoup que vous pouvez jouer de façon compétitive! Le but final reste de faire un échec et mat, il est donc nécessaire de développer des nouvelles techniques vu qu'il n'y pas de murs pour coincer le roi ennemi. Normalement, les parties ne durent pas plus longtemps que dans un jeu d'échec classique. Les pions font leur promotions sur les lignes 1 et 8 respectivement!",
 ]
 how_to_title = "Comment Jouer ?"
-how_to_paragraph = ["Le jeu est actuellement en version 1.3.2 sur la page","Jouer","!"]
+how_to_paragraph = ["Le jeu est actuellement en version 1.3.2 sur la page ","Jouer","!"]
 about_title = "À Propos"
 about_paragraphs = [
 "Je m'apelle Naviary. Dès que j'ai découvert Infinite-Chess (le concept existait bien avant ce site), J'ai été très intrigué par celui ci et les possibilités qu'il débloque! Jusqu'à aujourd'hui, y jouer était plutôt difficile, les membres de chess.com devaient créer des images du plateau eux même et se les envoyer à chaque coup. À cause de ça, peu de gens connaissent cette variante.",
@@ -53,8 +53,8 @@ variants_credits = [
 "Coaip (Chess on an Infinite Plane) crée par Vickalan.",
 "Pawn Horde crée par Inaccessible Cardinal.",
 "Abundance crée par Clicktuck Suskriberz.",
-"Pawndard par SexiLexi.",
-"Classical+ par SexiLexi.",
+"Pawndard par SexyLexi.",
+"Classical+ par SexyLexi.",
 "Knightline par Inaccessible Cardinal.",
 "Knighted Chess par cycy98.",
 "crée par Cory Evans and Joel Hamkins.",
@@ -97,7 +97,7 @@ username = "Nom d'utilisateur:"
 email = "Email:"
 password = "Mot de Passe:"
 create_button = "Créer un compte"
-argreement = ["J'accepte les ", "Conditions d'utilisation"]
+agreement = ["J'accepte les ", "Conditions d'utilisation", "."] # the middle entry is a hyperlink, the others are not
 
 [create-account.javascript]
 js-username_specs = "Le nom d'utilisateur doit être d'au moins 3 caractères et ne doit contenir que des lettres ou des chiffres"
@@ -147,15 +147,15 @@ keybinds_extra = [
 " va reset l'affichage des pièces. C'est utile si elles deviennent invisibles. Ce qui peut arriver quand elles sont à des distances très éloignées (comme 10^21).",
 " va activer/désactiver l'affichage des barres de navigation et d'informations, ce qui peut être utile pour enregistrer. Les streams et les vidéos sur le jeu sont les bienvenus!",
 " va activer/désactiver le compte de FPS. Ce qui va afficher le nombre de mises à jour de la partie par seconde (ce qui ne correspond pas toujours au nombre de frames affichées), étant donné que l'écran n'est rafraichit que quand quelque chose de visible change, pour optimiser les performances.",
-" va activer/désactiver l'affichage des icônes. Les icônes sont des petites images cliquables des pièces quand vous dézoomez suffisament. Dans les parties importées avec plus de 50 000 pièces, ce paramètre est automatiquement désactivé, étant donné qu'il prend beaucoup de performances, il peut cependant être réactivé.",
+" va activer/désactiver l'affichage des icônes. Les icônes sont des petites images cliquables des pièces quand vous dézoomez suffisament. Dans les parties importées avec plus de 50 000 pièces, ce paramètre est automatiquement désactivé, étant donné qu'il prend beaucoup de performances, il peut cependant être réactivé ",
 [" (backtick, ou la même touche que ", ") va activer/désactiver le mode Debug."],
 ]
 fairy_heading = "Pièces fées"
 fairy_paragraph = "Vous savez déjà ce que vous devez savoir pour jouer à la variante par défaut \"Classique\". Les pièces fées ne sont pas utilisés dans les échecs conventionels, mais elles sont incorporées dans d'autres variantes! Si vous vous trouvez dans une variante avec des pièces que vous n'avez jamais vu avant vous pouvez apprendre comment elles marchent ici!"
 editing_heading = "Edition de Plateau"
 editing_paragraphs = [
-["Il y a un ", "éditeur de plateau", " externe, pour l'instant disponible dans un google sheet publique! Il contient toutes les instructions sur comment l'utiliser (en anglais) et demande un peu de connaissances du fonctionnement des tableurs. Après ça, vous serez capable de créer et d'importer des positions customs dans le jeu via le bouton \"Coller la Position\" dans le menu des options !"],
-"Pour jouer sur une position custom avec un ami vous devez le rejoindre via une invitation privée, puis vous devez tous les deux copier et coller le code de la partie avant de commencer à jouer !",
+["Il y a un ", "éditeur de plateau", " externe, pour l'instant disponible dans un google sheet publique! Il contient toutes les instructions sur comment l'utiliser (en anglais) et demande un peu de connaissances du fonctionnement des tableurs. Après ça, vous serez capable de créer et d'importer des positions customs dans le jeu via le bouton \"Coller la Position\" dans le menu des options!"],
+"Pour jouer sur une position custom avec un ami vous devez le rejoindre via une invitation privée, puis vous devez tous les deux copier et coller le code de la partie avant de commencer à jouer!",
 "Un editeur de plateau en jeu est toujours prévu.",
 ]
 back = "Retour"
@@ -166,7 +166,7 @@ archbishop = {name="Archifou", description="Se déplace comme un fou et un caval
 amazon = {name="Amazone", description="Se déplace comme une reine et un cavalier combinés. C'est la pièce fée la plus forte!"}
 guard = {name="Garde", description="Se déplace comme le roi mais ne peut pas être mis en échec ou échec et mat."}
 hawk = {name="Faucon", description="Se déplace d'exactement 2 ou 3 cases dans chaque direction. Peut sauter au dessus d'autres pièces comme un cavalier."}
-obstacle = {name="Obstacle", description="Une pièce neutre (controlés par aucun des joueurs) qui bloque les mouvements mais peut être capturé."},
+obstacle = {name="Obstacle", description="Une pièce neutre (controlés par aucun des joueurs) qui bloque les mouvements mais peut être capturé."}
 centaur = {name="Centaure", description="Se déplace comme un cavalier et un garde combinés."}
 void = {name="Vide", description="Une pièce neutre (controlés par aucun des joueurs) qui represente l'absence de cases sur le plateau. Les pièces ne peuvent pas se déplacer par dessus ou à travers."}
 
@@ -178,32 +178,31 @@ online = "En Ligne"
 local = "Local"
 computer = "Ordinateur"
 variant = "Variante"
-variants = [
-"Classique",
-"Classique+",
-"Chess on an Infinite Plane",
-"Pawndard",
-"Knighted Chess",
-"Knightline",
-"Core",
-"Standarch",
-"Pawn Horde",
-"Space Classic",
-"Space",
-"Obstocean",
-"Abundance",
-"Amazon Chandelier",
-"Containment",
-"Classical - Limit 7",
-"Coaip - Limit 7",
-"Chess",
-"Experimental: Classical - KOTH",
-"Experimental: Coaip - KOTH",
-"Showcase: Omega",
-"Showcase: Omega^2",
-"Showcase: Omega^3",
-"Showcase: Omega^4",
-]
+Classical = "Classique"
+Classical_Plus = "Classique+"
+CoaIP = "Chess on an Infinite Plane"
+Pawndard = "Pawndard"
+Knighted_Chess = "Knighted Chess"
+Knightline = "Knightline"
+Core = "Core"
+Standarch = "Standarch"
+Pawn_Horde = "Pawn Horde"
+Space_Classic = "Space Classic"
+Space = "Space"
+Obstocean = "Obstocean"
+Abundance = "Abundance"
+Amazon_Chandelier = "Amazon Chandelier"
+Containment = "Containment"
+Classical_Limit_7 = "Classical - Limit 7"
+CoaIP_Limit_7 = "Coaip - Limit 7"
+Chess = "Chess"
+Classical_KOTH = "Experimental: Classical - KOTH"
+CoaIP_KOTH = "Experimental: Coaip - KOTH"
+Omega = "Showcase: Omega"
+Omega_Squared = "Showcase: Omega^2"
+Omega_Cubed = "Showcase: Omega^3"
+Omega_Fourth = "Showcase: Omega^4"
+no_clock = "Pas d'horloge"
 clock = "Horloge"
 minutes = "m"
 seconds = "s"
@@ -214,6 +213,7 @@ private = "Privé"
 no = "Non"
 yes = "Oui"
 rated = "Classé"
+unrated = "Non classé"
 join_games = "Rejoindre des Parties:"
 private_invite = "Invitation Privée:"
 your_invite = "Votre code d'invitation:"
@@ -311,6 +311,7 @@ accept = "Accepter"
 cancel = "Annuler"
 create_invite = "Créer une invitation"
 cancel_invite = "Annuler l'invitation"
+start_game = "Commencer"
 join_existing_active_games = "Rejoindre des parties existantes - actives:"
 
 [play.javascript.onlinegame]
@@ -392,7 +393,7 @@ bug_generic = "Ceci est un bug, reportez le s'il vous plaît."
 
 [terms]
 title = "Conditions d'Utilisation"
-warning = ["CE DOCUMENT N'A PAS DE VALEUR LÉGALE. Notre responsabilité n'est engagé que par la version anglaise de ce texte. Cette traduction n'a qu'une valeur informationelle et peut contenir des erreurs ou inexactitudes. Vous pouvez accèder à la version Anglaise", "ici", "."]
+warning = ["CE DOCUMENT N'A PAS DE VALEUR LÉGALE. Notre responsabilité n'est engagé que par la version anglaise de ce texte. Cette traduction n'a qu'une valeur informationelle et peut contenir des erreurs ou inexactitudes. Vous pouvez accèder à la version Anglaise ", "ici", "."]
 consent = "En utilisant ce site, vous vous engager à respecter les conditions suivantes. Si vous ne les acceptez pas, vous devez immédiatement arrêter d'utiliser ce site."
 guardian_consent = "Si vous avez moins de 18 ans vous devez recervoir l'accord de vos responsables légaux pour utiliser ce site ou vous créer un compte."
 parents_header = "Parents"
@@ -432,10 +433,10 @@ conclusion_header = "Conclusion"
 conclusion_paragraphs = [
 "Toute violations de ces termes peut resulter en un bannissement ou en une suppression de votre compte. InfiniteChess.org a pour souhait de donner à tout le monde l'opportunité de jouer et de prendre du plaisir! Mais, nous nous reservons le droit de bannir ou de supprimer des comptes, pour des raisons que nous ne sommes pas tenus de justifier ou de communiquer et ne ne pourrons légalement pas être tenu pour responsables.",
 ["Ces termes peuvent être modifiés à tout moment. Il est de VOTRE responsabilité de vous tenir au courant des mises à jour de ces derniers! Quand les conditions d'utilisations seront modifiées nous vous en informerons sur la page ", "Actualités", ". Si, vous n'adhérez plus aux conditions après une mise à jour de ces dernières vous devez immédiatement quitter le site. Vous pouvez supprimer votre compte depuis votre profil. Si vous supprimez votre compte, toutes vos informations personnelles et les données qui vont concernent seront supprimées SAUF l'historique de vos parties, qui sont associées à votre nom d'utilisateur. Car ces parties sont des informations publiques."],
-["Ce site est open-source. Vous pouvez récuperer ou distribuer toutes les ressources qui s'y trouvent tant que vos respectez les conditions décrites dans les ", "licences", " ! Ce le lien ci dessus n'est pas fonctionelle il est de votre responsabilité de trouver les licences."],
+["Ce site est open-source. Vous pouvez récuperer ou distribuer toutes les ressources qui s'y trouvent tant que vos respectez les conditions décrites dans les ", "licences", "! Ce le lien ci dessus n'est pas fonctionelle il est de votre responsabilité de trouver les licences."],
 "Nous ne garantissons pas que ce site sera en ligne 100% du temps. Nous ne garantissons pas non plus que les données ne seront jamais corrompues.",
 "Vous n'êtes pas autorisé à performer des activités illégales sur ce site.",
-["Si vous avez des questions concernant ces conditions, ou à propos du site de manière générale,", "envoyez nous un email !"]
+["Si vous avez des questions concernant ces conditions, ou à propos du site de manière générale,", "envoyez nous un email!"]
 ]
 update = "(Dernière mise à jour: 13 Juillet 2024. Ajout de l'avertissement sur le fait que toutes les parties jouées sur le site sont des informations publiques, ce qui inclu une approximation de la durée depuis la dernière activité de votre compte. Ces conditions peuvent être mises à jour à tout moment et il est de votre responsabilité de vous assurez que vous restez à jour.)"
 thanks = "Merci!"
@@ -458,10 +459,14 @@ login_button = "Se connecter"
 title = "Actualités"
 more_dev_logs = ["Plus de dev logs sont publiés sur le ", "discord officiel", ", et sur les ", "forums chess.com"]
 
+[news.july22-2024]
+date = "July 22, 2024:"
+account_warning = "If you have not verified your account, please do so on your profile page! All unverified accounts will soon be deleted!!"
+
 [news.july13-2024]
 date = "13 Juillet 2024:"
 tos_update = ["Les ", "Condition d'Utisation", " ont été mises à jour. Changements: Toutes les parties que vous jouez sur le site peuvent devenir publiques, ainsi que la durée approximative depuis votre dernière activité. Les conditions d'utilisations peuvent être modifiées à tout moment, et il est de votre responsabilité de vous assurez que vous êtes à jour sur ces dernières."]
-game_history_warning = "L'historique de vos parties pourrait être accessible depuis votre profil dans le futur ."
+game_history_warning = "L'historique de vos parties pourrait être accessible depuis votre profil dans le futur."
 
 [news.july9-2024]
 date = "9 Juillet 2024:"
@@ -473,7 +478,7 @@ text = "1.3.2: Ajout des variantes de showcase pour Omega^3 et Omega^4 qui ont �
 
 [news.may24-2024]
 date = "24 Mai 2024:"
-text = "La version 1.3.1 est sortie ! Elle comprend le guide, des info-bulles au survol des boutons de navigation ainsi que des liens vers le discord et les crédits sur la page d'accueil !"
+text = "La version 1.3.1 est sortie ! Elle comprend le guide, des info-bulles au survol des boutons de navigation ainsi que des liens vers le discord et les crédits sur la page d'accueil!"
 
 [news.may14-2024]
 date = "14 Mai 2024:"
@@ -509,6 +514,7 @@ ws-username_length = "Le nom d'utilisateur doit faire entre 3 et 20 caractères"
 ws-username_letters = "Le nom d'utilisateur ne doit contenir que des lettres et des chiffres"
 ws-username_taken = "Ce nom d'utilisateur est déjà pris"
 ws-username_bad_word = "Ce nom d'utilisateur contient un mot interdit"
+ws-username_reserved = "That username is reserved"
 ws-email_too_long = "Votre email est trop looooong."
 ws-email_invalid = "Votre email n'est pas valide"
 ws-email_in_use = "Cette adresse est déjà utilisée"
@@ -531,3 +537,16 @@ ws-bad_request = "Mauvaise Requête"
 ws-not_found = "404 Introuvable"
 ws-forbidden = "Interdit."
 ws-unauthorized_patron_page = "Non autorisé. Cette page est réservé aux patreons."
+ws-already_in_game = "You are already in a game."
+ws-player_already_has_invite = "Player already has an existing invite."
+ws-invite_cancelled = "Invite already cancelled."
+ws-accept_own_invite = "Silly goose. You can't accept your own invite!"
+ws-server_restarting = "The server is restarting in"
+ws-minutes = "minutes" # unit of time
+ws-minute = "minute" # unit of time
+ws-no_abort_game_over = "Can't abort game, it's already over."
+ws-no_abort_after_moves = "Can't abort game, atleast 2 moves have been played."
+ws-game_aborted_cheating = "Game aborted for probable cheating."
+ws-cannot_resign_finished_game = "Can't resign game, it's already over."
+ws-invalid_code = "Invalid code!" # Invite code doesn't match any existing invites
+ws-game_aborted = "Game aborted." # Invite was cancelled as you clicked on it

@@ -419,26 +419,6 @@ const math = (function() {
         };
     }
 
-    /**
-     * Gets the amount of steps from the origin point to the coord.
-     * This assumes the coord is on the same line as origin
-     * @param {Number[]} step Slide step `[dx,dy]`
-     * @param {Number[]} origin Coordinate of move origin `[x,y]`
-     * @param {Number[]} coord Coordinate `[x,y]`
-     * @param {boolean} isLeft 
-     * @returns {Number} The steps from origin 
-     */
-    function getLineSteps(step, origin, coord, isLeft) {
-        let x = (coord[0]-origin[0])/step[0]
-        if (!isLeft) x = Math.floor(x)
-        else x = Math.ceil(x)
-        if (step[0]!==0) return x;
-        let y = (coord[1]-origin[1])/step[1]
-        if (!isLeft) y = Math.floor(y)
-        else y = Math.ceil(y)
-        return y
-    }
-
     function convertPixelsToWorldSpace_Virtual(value) {
         return (value / camera.getCanvasHeightVirtualPixels()) * (camera.getScreenBoundingBox(false).top - camera.getScreenBoundingBox(false).bottom)
     }
@@ -448,22 +428,24 @@ const math = (function() {
     }
 
     /**
-     * Gets the corner/side that the line can intersect with.
-     * Used for `getCornerOfBoundingBox` and `getIntersectionEntryTile`
-     * @param {Number[]} line 
-     * @param {boolean} leftSide 
-     * @returns {String} The string repr of a corner/side
+     * Returns the side of the box, in english language, the line intersects with the box.
+     * If {@link negateSide} is false, it will return the positive X/Y side.
+     * If the line is orthogonal, it will only return top/bottom/left/right.
+     * Otherwise, it will return the corner name.
+     * @param {number[]} line - [dx,dy]
+     * @param {boolean} negateSide 
+     * @returns {string} Which side/corner the line passes through. [0,1] & false => "top"   [2,1] & true => "bottomleft"
      */
-    function getAABBCornerOfLine(line, leftSide) {
+    function getAABBCornerOfLine(line, negateSide) {
         let corner = "";
         v: {
-            if (line[1]==0) break v; // Horizontal so parallel with top/bottom lines
-            corner += ((line[0]>0==line[1]>0)==leftSide==(line[0]!=0)) ? "bottom" : "top" 
+            if (line[1] === 0) break v; // Horizontal so parallel with top/bottom lines
+            corner += ((line[0] > 0 === line[1] > 0) === negateSide === (line[0] !== 0)) ? "bottom" : "top" 
             // Gonna be honest I have no idea how this works but it does sooooooo its staying
         }
         h: {
-            if (line[0]==0) break h; // Vertical so parallel with left/right lines
-            corner += leftSide ? "left" : "right"
+            if (line[0] === 0) break h; // Vertical so parallel with left/right lines
+            corner += negateSide ? "left" : "right"
         }
         return corner;
     }
@@ -483,16 +465,18 @@ const math = (function() {
     }
 
     /**
-     * Returns point, if there is one, of a line with specified slope intersection with the screen edge on desired corner
-     * @param {Number} dx X step of line
-     * @param {Number} dy Y step of line
-     * @param {Number} c C of line
-     * @param {BoundingBox} boundingBox 
-     * @param {String} corner 
-     * @returns {?Number[]}
+     * Returns the tile-point the line intersects, on the specified side, of the provided box.
+     * DOES NOT round to nearest tile, but returns the floating point intersection.
+     * @param {number} dx - X change of the line
+     * @param {number} dy - Y change of the line
+     * @param {number} c - The c value of the line
+     * @param {BoundingBox} boundingBox - The box
+     * @param {string} corner - What side/corner the line intersects, in english language. "left"/"topright"...
+     * @returns {number[] | undefined} - The tile the line intersects, on the specified side, of the provided box, if it does intersect, otherwise undefined.
      */
-    function getIntersectionEntryTile (dx, dy, c, boundingBox, corner) {
+    function getLineIntersectionEntryTile (dx, dy, c, boundingBox, corner) {
         const { left, right, top, bottom } = boundingBox;
+
         // Check for intersection with left side of rectangle
         if (corner.endsWith('left')) {
             const yIntersectLeft = ((left * dy) + c) / dx;
@@ -516,36 +500,22 @@ const math = (function() {
             const xIntersectTop = ((top * dx) - c) / dy;
             if (xIntersectTop >= left && xIntersectTop <= right) return [xIntersectTop, top];
         }
+
+        // Doesn't intersect any tile in the box.
     }
-    /*
-    // Returns point, if there is one, of a line with specified slope "b" intersection screen edge on desired corner
-    function getIntersectionEntryTile (slope, b, boundingBox, corner) { // corner: "topright"/"bottomright"...
-        const { left, right, top, bottom } = boundingBox;
-        
-        // Check for intersection with left side of rectangle
-        if (corner.endsWith('left')) {
-            const yIntersectLeft = left * slope + b;
-            if (yIntersectLeft >= bottom && yIntersectLeft <= top) return [left, yIntersectLeft]
-        }
-        
-        // Check for intersection with bottom side of rectangle
-        if (corner.startsWith('bottom')) {
-            const xIntersectBottom = (bottom - b) * slope;
-            if (xIntersectBottom >= left && xIntersectBottom <= right) return [xIntersectBottom, bottom]
-        }
 
-        // Check for intersection with right side of rectangle
-        if (corner.endsWith('right')) {
-            const yIntersectRight = right * slope + b;
-            if (yIntersectRight >= bottom && yIntersectRight <= top) return [right, yIntersectRight];
-        }
-
-        // Check for intersection with top side of rectangle
-        if (corner.startsWith('top')) {
-            const xIntersectTop = (top - b) * slope;
-            if (xIntersectTop >= left && xIntersectTop <= right) return [xIntersectTop, top];
-        }
-    }*/
+    /**
+     * Returns the number of steps needed to reach from startCoord to endCoord, rounded down.
+     * @param {number[]} step - [dx,dy]
+     * @param {number[]} startCoord - Coordinates to start on
+     * @param {number[]} endCoord - Coordinate to stop at, proceeding no further
+     * @returns {number} the number of steps
+     */
+    function getLineSteps(step, startCoord, endCoord) {
+        const chebyshevDist = chebyshevDistance(startCoord, endCoord)
+        const stepChebyshev = Math.max(step[0], step[1]);
+        return Math.floor(chebyshevDist / stepChebyshev);
+    }
 
     function convertWorldSpaceToGrid(value) {
         return value / movement.getBoardScale()
@@ -615,7 +585,7 @@ const math = (function() {
      * @returns {boolean} Whether the coordinates are equal
      */
     function areCoordsEqual(coord1, coord2) {
-        if (!coord2 || !coord2) return false; // One undefined, can't be equal
+        if (!coord1 || !coord2) return false; // One undefined, can't be equal
         return coord1[0] === coord2[0] && coord1[1] === coord2[1]
     }
 
@@ -1047,13 +1017,13 @@ const math = (function() {
         convertCoordToWorldSpace_ClampEdge,
         clamp,
         closestPointOnLine,
-        getLineSteps,
         getBoundingBoxOfBoard,
         convertPixelsToWorldSpace_Virtual,
         convertWorldSpaceToPixels_Virtual,
         getAABBCornerOfLine,
         getCornerOfBoundingBox,
-        getIntersectionEntryTile,
+        getLineIntersectionEntryTile,
+        getLineSteps,
         convertWorldSpaceToGrid,
         euclideanDistance,
         manhattanDistance,

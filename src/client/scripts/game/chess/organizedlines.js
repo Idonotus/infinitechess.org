@@ -71,7 +71,7 @@ const organizedlines = {
             // Is line initialized
             if (!gamefile.piecesOrganizedByLines[strline][key]) gamefile.piecesOrganizedByLines[strline][key] = []
             let oline =gamefile.piecesOrganizedByLines[strline][key]
-            let i = organizedlines.getInsertIndexOfOLine(oline, coords, line[0] === 0)[1]
+            let i = organizedlines.getInsertIndexOfOLine(oline, coords, line[0] === 0)
             oline.splice(i, 0, piece)
         }
         
@@ -106,7 +106,7 @@ const organizedlines = {
     },
 
     /**
-     * 
+     * Binary search using the axis to look for the element
      * @param {Array} organizedLine 
      * @param {Number[]} coords 
      * @param {Boolean} lineIsVertical 
@@ -119,8 +119,9 @@ const organizedlines = {
         let max = organizedLine.length - 1;
         while ( min <= max ) {
             let mid = (( max - min ) >> 1 ) + min;
-            let midMag = organizedLine[mid].coords[axis];
-            if (midMag === searchMag) {
+            let refCoords = organizedLine[mid].coords
+            let midMag = refCoords[axis];
+            if (math.areCoordsEqual(refCoords, coords)) {
                 return mid;
             } else if (midMag > searchMag) {
                 max = mid;
@@ -132,7 +133,9 @@ const organizedlines = {
     },
 
     /**
-     * 
+     * Altered binary search to get the insert index.
+     * The index is between (a lower or eq num)[min] and (a greater num)[max]
+     * Can handle array ends and start indexs
      * @param {Array} organizedLine 
      * @param {Number[]} coords 
      * @param {Boolean} lineIsVertical 
@@ -152,7 +155,7 @@ const organizedlines = {
                 min = mid;
             }
         }
-        return [min,max];
+        return max;
     },
 
     initUndefineds: function(gamefile) {

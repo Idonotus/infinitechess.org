@@ -116,7 +116,7 @@ const organizedlines = {
         const axis = lineIsVertical ? 1 : 0;
         const searchMag = coords[axis];
         let c = 0
-        const maxiter = Math.log2(max-min+1)
+        const maxiter = Math.log2(max-min+1) + 1
         while ( min <= max && c<maxiter) {
             let mid = (( max - min ) >> 1 ) + min;
             let refCoords = organizedLine[mid].coords
@@ -129,7 +129,7 @@ const organizedlines = {
                 min = mid + 1;
             }
         }
-        if (c>maxiter) {debugger;}
+        if (c>=maxiter) {debugger;}
         return undefined;
     },
 
@@ -158,7 +158,7 @@ const organizedlines = {
             }
             c++
         }
-        if (c>maxiter) {debugger;}
+        if (c>=maxiter) {debugger;}
         return max;
     },
 

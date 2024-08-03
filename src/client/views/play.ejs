@@ -5,8 +5,7 @@
             const translations = <%-JSON.stringify({
                 ...t('play.javascript', {returnObjects: true}),
                 ...t('play.play-menu', {returnObjects: true}),
-                ...t('header.javascript', {returnObjects: true}),
-                ...t('server.javascript', {returnObjects: true})
+                ...t('header.javascript', {returnObjects: true})
             })%>;
         </script>
         <!-- Do not modify the next line under any circumstances. It is used by HTMLScriptInjector.js as a reference point of where to inject htmlscript.js -->
@@ -20,7 +19,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable = no" />
         <title>Infinite Chess - Play</title>
         <link rel='stylesheet' href='/css/play.css' onerror="htmlscript.callback_LoadingError(event)" onload="(() => { htmlscript.removeOnerror.call(this); })()">
-        <link rel="icon" type="image/png" href="/img/favicon.png">
+        <link rel="icon" href="/img/favicon-light.png" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/img/favicon-dark.png" media="(prefers-color-scheme: dark)" id="favicon" />
         <!-- Custom fonts: Merriweather, Open Sans -->
         <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,900&family=Open+Sans:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&display=swap" rel="stylesheet">
         <!-- Preloads so that when elements inherit new css properties, we don't have to wait to fetch the resource.
@@ -185,6 +185,11 @@
                                 <source srcset="/img/game/guide/fairy/centaur.webp" type="image/webp" />
                                 <img loading="lazy" src="/img/game/guide/fairy/centaur.png">
                             </picture>
+                            <picture id="nr-img" class="img-fairymoveset hidden">
+                                <source srcset="/img/game/guide/fairy/knightrider.avif" type="image/avif" />
+                                <source srcset="/img/game/guide/fairy/knightrider.webp" type="image/webp" />
+                                <img loading="lazy" src="/img/game/guide/fairy/knightrider.png">
+                            </picture>
                             <picture id="ob-img" class="img-fairymoveset hidden">
                                 <source srcset="/img/game/guide/fairy/obstacle.avif" type="image/avif" />
                                 <source srcset="/img/game/guide/fairy/obstacle.webp" type="image/webp" />
@@ -224,6 +229,10 @@
                                     <div id="ce-desc" class="fairy-card-desc hidden">
                                         <p class="fairy-card-title"><%=t('play.guide.pieces.centaur.name')%></p>
                                         <p class="fairy-card-description"><%=t('play.guide.pieces.centaur.description')%></p>
+                                    </div>
+                                    <div id="nr-desc" class="fairy-card-desc hidden">
+                                        <p class="fairy-card-title"><%=t('play.guide.pieces.knightrider.name')%></p>
+                                        <p class="fairy-card-description"><%=t('play.guide.pieces.knightrider.description')%></p>
                                     </div>
                                     <div id="ob-desc" class="fairy-card-desc hidden">
                                         <p class="fairy-card-title"><%=t('play.guide.pieces.obstacle.name')%></p>
@@ -265,8 +274,8 @@
                                         <option value="Classical"><%=t('play.play-menu.Classical')%></option>
                                         <option value="Classical_Plus"><%=t('play.play-menu.Classical_Plus')%></option>
                                         <option value="CoaIP"><%=t('play.play-menu.CoaIP')%></option>
-                                        <option value="Pawndard"><%=t('play.play-menu.Pawndard')%></option>
                                         <option value="Knighted_Chess"><%=t('play.play-menu.Knighted_Chess')%></option>
+                                        <option value="Pawndard"><%=t('play.play-menu.Pawndard')%></option>
                                         <option value="Knightline"><%=t('play.play-menu.Knightline')%></option>
                                         <option value="Core"><%=t('play.play-menu.Core')%></option>
                                         <option value="Standarch"><%=t('play.play-menu.Standarch')%></option>
@@ -293,19 +302,21 @@
                                 <p><%=t('play.play-menu.clock')%></p>
                                 <div class="option">
                                     <select id="option-clock" class="button">
-                                        <option value="1+2">1<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
-                                        <option value="2+2">2<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
-                                        <option value="3+2">3<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
-                                        <option value="5+2">5<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
-                                        <option value="8+3">8<%=t('play.play-menu.minutes')%>+3<%=t('play.play-menu.seconds')%></option>
-                                        <option value="10+4" selected>10<%=t('play.play-menu.minutes')%>+4<%=t('play.play-menu.seconds')%></option>
-                                        <option value="12+5">12<%=t('play.play-menu.minutes')%>+5<%=t('play.play-menu.seconds')%></option>
-                                        <option value="15+6">15<%=t('play.play-menu.minutes')%>+6<%=t('play.play-menu.seconds')%></option>
-                                        <option value="20+8">20<%=t('play.play-menu.minutes')%>+8<%=t('play.play-menu.seconds')%></option>
-                                        <option value="25+10">25<%=t('play.play-menu.minutes')%>+10<%=t('play.play-menu.seconds')%></option>
-                                        <option value="30+15">30<%=t('play.play-menu.minutes')%>+15<%=t('play.play-menu.seconds')%></option>
-                                        <option value="40+20">40<%=t('play.play-menu.minutes')%>+20<%=t('play.play-menu.seconds')%></option>
-                                        <option value="0"><%=t('play.play-menu.infinite_time')%></option>
+                                        <!-- Developmental time control: 15 seconds -->
+                                        <!-- <option value="15+2">1<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option> -->
+                                        <option value="60+2">1<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
+                                        <option value="120+2">2<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
+                                        <option value="180+2">3<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
+                                        <option value="300+2">5<%=t('play.play-menu.minutes')%>+2<%=t('play.play-menu.seconds')%></option>
+                                        <option value="480+3">8<%=t('play.play-menu.minutes')%>+3<%=t('play.play-menu.seconds')%></option>
+                                        <option value="600+4" selected>10<%=t('play.play-menu.minutes')%>+4<%=t('play.play-menu.seconds')%></option>
+                                        <option value="720+5">12<%=t('play.play-menu.minutes')%>+5<%=t('play.play-menu.seconds')%></option>
+                                        <option value="900+6">15<%=t('play.play-menu.minutes')%>+6<%=t('play.play-menu.seconds')%></option>
+                                        <option value="1200+8">20<%=t('play.play-menu.minutes')%>+8<%=t('play.play-menu.seconds')%></option>
+                                        <option value="1500+10">25<%=t('play.play-menu.minutes')%>+10<%=t('play.play-menu.seconds')%></option>
+                                        <option value="1800+15">30<%=t('play.play-menu.minutes')%>+15<%=t('play.play-menu.seconds')%></option>
+                                        <option value="2400+20">40<%=t('play.play-menu.minutes')%>+20<%=t('play.play-menu.seconds')%></option>
+                                        <option value="-"><%=t('play.play-menu.infinite_time')%></option>
                                     </select>
                                 </div>
                             </div>
@@ -332,7 +343,7 @@
                                 <p><%=t('play.play-menu.rated')%></p>
                                 <div class="option">
                                     <select id="option-rated" class="button">
-                                        <option value="unrated"><%=t('play.play-menu.no')%></option>
+                                        <option value="casual"><%=t('play.play-menu.no')%></option>
                                     </select>
                                 </div>
                             </div>
@@ -347,7 +358,7 @@
                                     <div class="invite-child">Standard</div>
                                     <div class="invite-child">15m+15s</div>
                                     <div class="invite-child">Random</div>
-                                    <div class="invite-child">Unrated</div>
+                                    <div class="invite-child">Casual</div>
                                     <div class="invite-child accept">Accept</div>
                                 </div> -->
                             </div>

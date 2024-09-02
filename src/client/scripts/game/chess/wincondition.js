@@ -47,7 +47,10 @@ const wincondition = (function() {
      * @returns {string | false} The conclusion string, if the game is over. For example, "white checkmate", or "draw stalemate". If the game isn't over, this returns *false*.
      */
     function getGameConclusion(gamefile) {
-        return detectAllpiecescaptured(gamefile)
+        const specialConclusion = []
+        dispatchEvent(new CustomEvent('checkConclusion', {detail: {gamefile:gamefile, conclusion: specialConclusion}}))
+        return specialConclusion[0]
+            || detectAllpiecescaptured(gamefile)
             || detectRoyalCapture(gamefile)
             || detectAllroyalscaptured(gamefile)
             || detectThreecheck(gamefile)

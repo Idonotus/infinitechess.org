@@ -347,10 +347,10 @@ function getAdjacentPieces(gamefile, coords, step) {
     let rightPiece = null;
     gamefileutility.forEachPieceInPiecesByType(testAdjacents, gamefile.ourPieces, false);
 
-    function testAdjacents(type, coords) {
-        if (!coords) return;
-        const piece = gamefileutility.getPieceFromTypeAndCoords(gamefile, type, coords);
-        if (lineKey !== getKeyFromLine(step, piece.coords)) { console.log(lineKey,getKeyFromLine(step, piece.coords)); return;}
+    function testAdjacents(type, piececoord) {
+        if (!piececoord) return;
+        const piece = gamefileutility.getPieceFromTypeAndCoords(gamefile, type, piececoord);
+        if (lineKey !== getKeyFromLine(step, piece.coords)) return;
         if (piece.coords[axis] > coords[axis]) {
             if (!rightPiece) {
                 rightPiece = piece;
@@ -365,6 +365,7 @@ function getAdjacentPieces(gamefile, coords, step) {
             if (piece.coords[axis] > leftPiece.coords[axis]) leftPiece = piece;
         }
     }
+    
     return [leftPiece, rightPiece];
 }
 

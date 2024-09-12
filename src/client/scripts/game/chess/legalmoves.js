@@ -11,6 +11,7 @@ import typeutil from '../misc/typeutil.js';
 import jsutil from '../misc/jsutil.js';
 import coordutil from '../misc/coordutil.js';
 import winconutil from '../misc/winconutil.js';
+import game from './game.js';
 // Import End
 
 /** 
@@ -124,7 +125,7 @@ const legalmoves = (function() {
                     const line = lines[i];
                     if (!thisPieceMoveset.sliding[line]) continue;
                     const key = organizedlines.getKeyFromLine(line,coords);
-                    legalSliding[line] = slide_CalcLegalLimit(gamefile.piecesOrganizedByLines[line][key],line, thisPieceMoveset.sliding[line], coords, color);
+                    legalSliding[line] = slide_CalcLegalLimit(gamefile,line, thisPieceMoveset.sliding[line], coords, color);
                 };
             };
 
@@ -182,13 +183,13 @@ const legalmoves = (function() {
     /**
      * Takes in specified organized list, direction of the slide, the current moveset...
      * Shortens the moveset by pieces that block it's path.
-     * @param {Piece[]} line - The list of pieces on this line 
+     * @param {gamefile} gamefile
      * @param {number[]} direction - The direction of the line: `[dx,dy]` 
      * @param {number[]} slideMoveset - How far this piece can slide in this direction: `[left,right]`. If the line is vertical, this is `[bottom,top]`
      * @param {number[]} coords - The coordinates of the piece with the specified slideMoveset.
      * @param {string} color - The color of friendlies
      */
-    function slide_CalcLegalLimit(line, direction, slideMoveset, coords, color) {
+    function slide_CalcLegalLimit(gamefile, direction, slideMoveset, coords, color) {
 
         if (!slideMoveset) return; // Return undefined if there is no slide moveset
 
@@ -197,31 +198,55 @@ const legalmoves = (function() {
         // For most we'll be comparing the x values, only exception is the vertical lines.
         const axis = direction[0] === 0 ? 1 : 0; 
         const limit = math.copyCoords(slideMoveset);
-        // Iterate through all pieces on same line
-        for (let i = 0; i < line.length; i++) {
-            // What are the coords of this piece?
-            const thisPiece = line[i]; // { type, coords }
-            const thisPieceSteps = Math.floor((thisPiece.coords[axis] - coords[axis]) / direction[axis]);
-            const thisPieceColor = colorutil.getPieceColorFromType(thisPiece.type);
+        const [leftPiece, rightPiece] = organizedlines.getAdjacentPieces(gamefile, coords, direction);
+        if (leftPiece) {
+            const thisPieceSteps = Math.floor((leftPiece.coords[axis] - coords[axis]) / direction[axis]);
+            const thisPieceColor = colorutil.getPieceColorFromType(leftPiece.type);
             const isFriendlyPiece = color === thisPieceColor;
-            const isVoid = thisPiece.type === 'voidsN';
-            // Is the piece to the left of us or right of us?
-            if (thisPieceSteps < 0) { // To our left
+            const isVoid = leftPiece.type === 'voidsN';
 
-                // What would our new left slide limit be? If it's an opponent, it's legal to capture it.
-                const newLeftSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps + 1 : thisPieceSteps;
-                // If the piece x is closer to us than our current left slide limit, update it
-                if (newLeftSlideLimit > limit[0]) limit[0] = newLeftSlideLimit;
+            // What would our new left slide limit be? If it's an opponent, it's legal to capture it.
+            const newLeftSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps + 1 : thisPieceSteps;
+            // If the piece x is closer to us than our current left slide limit, update it
+            if (newLeftSlideLimit > limit[0]) limit[0] = newLeftSlideLimit;
 
-            } else if (thisPieceSteps > 0) { // To our right
-
-                // What would our new right slide limit be? If it's an opponent, it's legal to capture it.
-                const newRightSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps - 1 : thisPieceSteps;
-                // If the piece x is closer to us than our current left slide limit, update it
-                if (newRightSlideLimit < limit[1]) limit[1] = newRightSlideLimit;
-
-            } // else this is us, don't do anything.
         }
+        if (rightPiece) {
+            const thisPieceSteps = Math.floor((rightPiece.coords[axis] - coords[axis]) / direction[axis]);
+            const thisPieceColor = colorutil.getPieceColorFromType(rightPiece.type);
+            const isFriendlyPiece = color === thisPieceColor;
+            const isVoid = rightPiece.type === 'voidsN';
+
+            // What would our new right slide limit be? If it's an opponent, it's legal to capture it.
+            const newRightSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps - 1 : thisPieceSteps;
+            // If the piece x is closer to us than our current left slide limit, update it
+            if (newRightSlideLimit < limit[1]) limit[1] = newRightSlideLimit;
+        }
+        // Iterate through all pieces on same line
+        // for (let i = 0; i < line.length; i++) {
+        //     // What are the coords of this piece?
+        //     const thisPiece = line[i]; // { type, coords }
+        //     const thisPieceSteps = Math.floor((thisPiece.coords[axis] - coords[axis]) / direction[axis]);
+        //     const thisPieceColor = colorutil.getPieceColorFromType(thisPiece.type);
+        //     const isFriendlyPiece = color === thisPieceColor;
+        //     const isVoid = thisPiece.type === 'voidsN';
+        //     // Is the piece to the left of us or right of us?
+        //     if (thisPieceSteps < 0) { // To our left
+
+        //         // What would our new left slide limit be? If it's an opponent, it's legal to capture it.
+        //         const newLeftSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps + 1 : thisPieceSteps;
+        //         // If the piece x is closer to us than our current left slide limit, update it
+        //         if (newLeftSlideLimit > limit[0]) limit[0] = newLeftSlideLimit;
+
+        //     } else if (thisPieceSteps > 0) { // To our right
+
+        //         // What would our new right slide limit be? If it's an opponent, it's legal to capture it.
+        //         const newRightSlideLimit = isFriendlyPiece || isVoid ? thisPieceSteps - 1 : thisPieceSteps;
+        //         // If the piece x is closer to us than our current left slide limit, update it
+        //         if (newRightSlideLimit < limit[1]) limit[1] = newRightSlideLimit;
+
+        //     } // else this is us, don't do anything.
+        // }
         return limit;
     }
 

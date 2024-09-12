@@ -4,7 +4,6 @@ import legalmoves from './legalmoves.js';
 import gamefileutility from './gamefileutility.js';
 import specialdetect from './specialdetect.js';
 import arrows from '../rendering/arrows.js';
-import wincondition from './wincondition.js';
 import clock from '../misc/clock.js';
 import organizedlines from './organizedlines.js';
 import animation from '../rendering/animation.js';
@@ -24,7 +23,6 @@ import frametracker from '../rendering/frametracker.js';
  * Type Definitions 
  * @typedef {import('./gamefile.js').gamefile} gamefile
  * @typedef {import('./movesscript.js').Move} Move
- * @typedef {import('./movepiece.js').Piece} Piece
 */
 
 "use strict";

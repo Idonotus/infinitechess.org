@@ -190,7 +190,7 @@ const checkdetection = (function() {
             if (!thisPieceMoveset.sliding) continue; // Piece has no sliding movesets.
             const moveset = thisPieceMoveset.sliding[directionKey];
             if (!moveset) continue; // Piece can't slide in the direction our line is going
-            const thisPieceLegalSlide = legalmoves.slide_CalcLegalLimit(line, direction, moveset, thisPiece.coords, thisPieceColor);
+            const thisPieceLegalSlide = legalmoves.slide_CalcLegalLimit(gamefile, direction, moveset, thisPiece.coords, thisPieceColor);
             if (!thisPieceLegalSlide) continue; // This piece can't move in the direction of this line, NEXT piece!
 
             if (!legalmoves.doesSlidingMovesetContainSquare(thisPieceLegalSlide, direction, thisPiece.coords, coords)) continue; // This piece can't slide so far as to reach us, NEXT piece!

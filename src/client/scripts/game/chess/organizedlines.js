@@ -332,12 +332,40 @@ function getXFromLine(step, coords) {
 
 /**
  * 
- * @param {Piece[]} pieces 
- * @param {*} coords 
- * @param {*} step 
+ * @param {gamefile} pieces 
+ * @param {Number[]} coords 
+ * @param {Number[]} step
+ * 
+ * @returns {Piece|null[]}
  */
-function getAdjacentPieces(pieces, coords, step) {
+function getAdjacentPieces(gamefile, coords, step) {
+    const lineKey = getKeyFromLine(step, coords);
+    const axis = step[0] === 0 ? 1 : 0;
+    /** @type {Piece?} */
+    let leftPiece = null;
+    /** @type {Piece?} */
+    let rightPiece = null;
+    gamefileutility.forEachPieceInPiecesByType(testAdjacents, gamefile.ourPieces, false);
 
+    function testAdjacents(type, coords) {
+        if (!coords) return;
+        const piece = gamefileutility.getPieceFromTypeAndCoords(gamefile, type, coords);
+        if (lineKey !== getKeyFromLine(step, piece.coords)) { console.log(lineKey,getKeyFromLine(step, piece.coords)); return;}
+        if (piece.coords[axis] > coords[axis]) {
+            if (!rightPiece) {
+                rightPiece = piece;
+                return;
+            }
+            if (piece.coords[axis] < rightPiece.coords[axis]) rightPiece = piece;
+        } else if (piece.coords[axis] < coords[axis]) {
+            if (!leftPiece) {
+                leftPiece = piece;
+                return;
+            }
+            if (piece.coords[axis] > leftPiece.coords[axis]) leftPiece = piece;
+        }
+    }
+    return [leftPiece, rightPiece];
 }
 
 /**

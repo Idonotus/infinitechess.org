@@ -42,17 +42,17 @@ const GAME_VERSION = "1.4.2";
 const useOriginWhitelist = false;
 /** The whitelist of allowed origins. Only used if {@link useOriginWhitelist} is true. */
 const allowedOrigins = [ // Allowed sites
-    // 'https://www.infinitechess.org', // Is this needed?
-    'https://www.google.com'
+	// 'https://www.infinitechess.org', // Is this needed?
+	'https://www.google.com'
 ];
 
 export {
-    DEV_BUILD,
-    BUNDLE_FILES,
-    ARE_RATE_LIMITING,
-    simulatedWebsocketLatencyMillis,
-    HOST_NAME,
-    GAME_VERSION,
-    useOriginWhitelist,
-    allowedOrigins
+	DEV_BUILD,
+	BUNDLE_FILES,
+	ARE_RATE_LIMITING,
+	simulatedWebsocketLatencyMillis,
+	HOST_NAME,
+	GAME_VERSION,
+	useOriginWhitelist,
+	allowedOrigins
 };

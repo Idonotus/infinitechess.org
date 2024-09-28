@@ -13,137 +13,137 @@ import coordutil from '../misc/coordutil.js';
  * @returns {Object} The position in keys format
  */
 function genPositionOfOmegaFourth() {
-    const dist = 500; // Generate Omega^4 up to a distance of 50 tiles away
+	const dist = 500; // Generate Omega^4 up to a distance of 50 tiles away
 
-    // King chamber
-    const startingPos = {
-        '-14,17':'pawnsW',
-        '-14,18':'pawnsB',
-        '-13,14':'pawnsW',
-        '-13,15':'pawnsB',
-        '-13,16':'pawnsW',
-        '-13,17':'pawnsB',
-        '-13,20':'pawnsW',
-        '-13,21':'pawnsB',
-        '-13,22':'pawnsW',
-        '-13,23':'pawnsB',
-        '-13,24':'pawnsW',
-        '-13,25':'pawnsB',
-        '-13,26':'pawnsW',
-        '-13,27':'pawnsB',
-        '-12,16':'bishopsB',
-        '-12,25':'bishopsW',
-        '-11,14':'pawnsW',
-        '-11,15':'pawnsB',
-        '-11,16':'kingsB',
-        '-11,17':'pawnsB',
-        '-11,24':'pawnsW',
-        '-11,25':'kingsW',
-        '-11,26':'pawnsW',
-        '-11,27':'pawnsB',
-        '-10,16':'bishopsB',
-        '-10,25':'bishopsW',
-        '-9,14':'pawnsW',
-        '-9,15':'pawnsB',
-        '-9,16':'pawnsW',
-        '-9,17':'pawnsB',
-        '-9,18':'pawnsW',
-        '-9,19':'pawnsB',
-        '-9,20':'pawnsW',
-        '-9,21':'pawnsB',
-        '-9,22':'pawnsW',
-        '-9,23':'pawnsB',
-        '-9,24':'pawnsW',
-        '-9,25':'pawnsB',
-        '-9,26':'pawnsW',
-        '-9,27':'pawnsB',
-    };
+	// King chamber
+	const startingPos = {
+		'-14,17':'pawnsW',
+		'-14,18':'pawnsB',
+		'-13,14':'pawnsW',
+		'-13,15':'pawnsB',
+		'-13,16':'pawnsW',
+		'-13,17':'pawnsB',
+		'-13,20':'pawnsW',
+		'-13,21':'pawnsB',
+		'-13,22':'pawnsW',
+		'-13,23':'pawnsB',
+		'-13,24':'pawnsW',
+		'-13,25':'pawnsB',
+		'-13,26':'pawnsW',
+		'-13,27':'pawnsB',
+		'-12,16':'bishopsB',
+		'-12,25':'bishopsW',
+		'-11,14':'pawnsW',
+		'-11,15':'pawnsB',
+		'-11,16':'kingsB',
+		'-11,17':'pawnsB',
+		'-11,24':'pawnsW',
+		'-11,25':'kingsW',
+		'-11,26':'pawnsW',
+		'-11,27':'pawnsB',
+		'-10,16':'bishopsB',
+		'-10,25':'bishopsW',
+		'-9,14':'pawnsW',
+		'-9,15':'pawnsB',
+		'-9,16':'pawnsW',
+		'-9,17':'pawnsB',
+		'-9,18':'pawnsW',
+		'-9,19':'pawnsB',
+		'-9,20':'pawnsW',
+		'-9,21':'pawnsB',
+		'-9,22':'pawnsW',
+		'-9,23':'pawnsB',
+		'-9,24':'pawnsW',
+		'-9,25':'pawnsB',
+		'-9,26':'pawnsW',
+		'-9,27':'pawnsB',
+	};
 
-    // Rook towers
+	// Rook towers
 
-    const startOfRookTowers = {
-        '0,3': 'pawnsW',
-        '0,4': 'pawnsB',
-        '0,5': 'pawnsW',
-        '0,6': 'pawnsB',
-        '0,11': 'pawnsW',
-        '0,12': 'pawnsB',
-        '1,4': 'bishopsW',
-        '1,12': 'bishopsW',
-        '1,13': 'rooksB',
-        '2,1': 'pawnsW',
-        '2,2': 'pawnsB',
-        '2,3': 'pawnsW',
-        '2,4': 'pawnsB',
-        '2,5': 'pawnsW',
-        '2,6': 'pawnsB',
-        '2,7': 'pawnsW',
-        '2,8': 'pawnsW',
-        '2,9': 'pawnsW',
-        '2,10': 'pawnsW',
-        '2,11': 'pawnsW',
-        '2,12': 'pawnsB',
-        '3,2': 'bishopsW',
-        '3,4': 'bishopsB',
-        '3,6': 'pawnsW',
-        '3,7': 'pawnsB',
-        '3,8': 'bishopsW',
-        '3,9': 'pawnsW',
-        '3,10': 'bishopsW',
-        '3,12': 'bishopsW',
-        '3,14': 'bishopsW',
-        '4,1': 'pawnsW',
-        '4,2': 'pawnsB',
-        '4,3': 'pawnsW',
-        '4,4': 'pawnsB',
-        '4,7': 'pawnsW',
-        '4,8': 'pawnsB',
-        '4,9': 'bishopsW',
-        '4,11': 'bishopsW',
-        '4,13': 'bishopsW',
-        '4,15': 'bishopsW',
-        '4,16': 'rooksB',
-        '5,4': 'pawnsW',
-        '5,5': 'pawnsB',
-        '5,8': 'pawnsW',
-        '5,9': 'pawnsB',
-        '5,10': 'pawnsW',
-        '5,11': 'pawnsW',
-        '5,12': 'pawnsW',
-        '5,13': 'pawnsW',
-        '5,14': 'pawnsW',
-        '5,15': 'pawnsB',
-    };
+	const startOfRookTowers = {
+		'0,3': 'pawnsW',
+		'0,4': 'pawnsB',
+		'0,5': 'pawnsW',
+		'0,6': 'pawnsB',
+		'0,11': 'pawnsW',
+		'0,12': 'pawnsB',
+		'1,4': 'bishopsW',
+		'1,12': 'bishopsW',
+		'1,13': 'rooksB',
+		'2,1': 'pawnsW',
+		'2,2': 'pawnsB',
+		'2,3': 'pawnsW',
+		'2,4': 'pawnsB',
+		'2,5': 'pawnsW',
+		'2,6': 'pawnsB',
+		'2,7': 'pawnsW',
+		'2,8': 'pawnsW',
+		'2,9': 'pawnsW',
+		'2,10': 'pawnsW',
+		'2,11': 'pawnsW',
+		'2,12': 'pawnsB',
+		'3,2': 'bishopsW',
+		'3,4': 'bishopsB',
+		'3,6': 'pawnsW',
+		'3,7': 'pawnsB',
+		'3,8': 'bishopsW',
+		'3,9': 'pawnsW',
+		'3,10': 'bishopsW',
+		'3,12': 'bishopsW',
+		'3,14': 'bishopsW',
+		'4,1': 'pawnsW',
+		'4,2': 'pawnsB',
+		'4,3': 'pawnsW',
+		'4,4': 'pawnsB',
+		'4,7': 'pawnsW',
+		'4,8': 'pawnsB',
+		'4,9': 'bishopsW',
+		'4,11': 'bishopsW',
+		'4,13': 'bishopsW',
+		'4,15': 'bishopsW',
+		'4,16': 'rooksB',
+		'5,4': 'pawnsW',
+		'5,5': 'pawnsB',
+		'5,8': 'pawnsW',
+		'5,9': 'pawnsB',
+		'5,10': 'pawnsW',
+		'5,11': 'pawnsW',
+		'5,12': 'pawnsW',
+		'5,13': 'pawnsW',
+		'5,14': 'pawnsW',
+		'5,15': 'pawnsB',
+	};
 
-    const keys = Object.keys(startOfRookTowers);
-    for (const key of keys) {
-        startingPos[key] = startOfRookTowers[key];
-    }
+	const keys = Object.keys(startOfRookTowers);
+	for (const key of keys) {
+		startingPos[key] = startOfRookTowers[key];
+	}
 
-    appendPawnTower(startingPos, 0, 13, dist);
-    appendPawnTower(startingPos, 2, 13, dist);
-    appendPawnTower(startingPos, 3, 16, dist);
-    appendPawnTower(startingPos, 5, 16, dist);
+	appendPawnTower(startingPos, 0, 13, dist);
+	appendPawnTower(startingPos, 2, 13, dist);
+	appendPawnTower(startingPos, 3, 16, dist);
+	appendPawnTower(startingPos, 5, 16, dist);
 
-    spawnAllRookTowers(startingPos, 6, 3, dist + 3, dist);
+	spawnAllRookTowers(startingPos, 6, 3, dist + 3, dist);
 
-    // Bishop Cannon Battery
+	// Bishop Cannon Battery
 
-    startingPos[coordutil.getKeyFromCoords([0,-6])] = 'pawnsB';
-    startingPos[coordutil.getKeyFromCoords([0,-7])] = 'pawnsW';
+	startingPos[coordutil.getKeyFromCoords([0,-6])] = 'pawnsB';
+	startingPos[coordutil.getKeyFromCoords([0,-7])] = 'pawnsW';
 
-    spawnAllBishopCannons(startingPos, 1, -7, dist, -dist);
+	spawnAllBishopCannons(startingPos, 1, -7, dist, -dist);
 
-    spawnAllWings(startingPos, -1, -7, -dist, -dist);
+	spawnAllWings(startingPos, -1, -7, -dist, -dist);
 
-    addVoidSquaresToOmegaFourth(startingPos, -866, 500, 567, -426, -134);
+	addVoidSquaresToOmegaFourth(startingPos, -866, 500, 567, -426, -134);
 
-    return startingPos;
+	return startingPos;
 
-    function appendPawnTower(startingPos, x, startY, endY) {
-        if (endY < startY) return; // Don't do negative pawn towers
-        
-        for (let y = startY; y <= endY; y++) {
+	function appendPawnTower(startingPos, x, startY, endY) {
+		if (endY < startY) return; // Don't do negative pawn towers
+		
+	    for (let y = startY; y <= endY; y++) {
             const thisCoords = [x,y];
             const key = coordutil.getKeyFromCoords(thisCoords);
             startingPos[key] = "pawnsW";

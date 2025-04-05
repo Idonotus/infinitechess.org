@@ -96,6 +96,11 @@ function deleteUnusedMovesets(gamefile: gamefile) {
 		const rawType = Number(key) as RawType;
 		if (!existingRawTypes.includes(rawType)) delete gamefile.pieceMovesets[key];
 	}
+	// Also delete unused specialMove functions
+	for (const key in gamefile.specialMoves) {
+		const rawType = Number(key) as RawType;
+		if (!existingRawTypes.includes(rawType)) delete gamefile.specialMoves[key];
+	}
 }
 
 // FUNCTIONS THAT SHOULD BE MOVED ELSEWHERE!!!!! They introduce too many dependancies ----------------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

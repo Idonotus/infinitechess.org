@@ -5,7 +5,7 @@
 
 import legalmoves from './legalmoves.js';
 import formatconverter from './formatconverter.js';
-import typeutil, { players, rawTypes } from '../util/typeutil.js';
+import typeutil, { ext, players, rawTypes } from '../util/typeutil.js';
 import variant from '../variants/variant.js';
 
 /** 
@@ -51,7 +51,7 @@ function initExistingTypes(gamefile) {
 			}
 		}
 		gamefile.startSnapshot.existingTypes = types;
-		gamefile.startSnapshot.existingRawTypes = [...new Set(gamefile.startSnapshot.existingTypes.map(typeutil.getRawType))];
+		gamefile.startSnapshot.existingRawTypes = Object.values(rawTypes);
 		return;
 	}
 
@@ -66,6 +66,16 @@ function initExistingTypes(gamefile) {
 			for (const rawType of rawPromotions) {
 				types.add(typeutil.buildType(rawType, player));
 			}
+		}
+	}
+
+	/** If Player 3 or greater is present (multiplayer game), then gargoyles may appear when a player dies.
+	 * Which means we also must add corresponding neutral for every type in the game! */
+	if (gamefile.gameRules.turnOrder.some(p => p >= 3)) {
+		for (const type of [...types]) { // Spread to avoid problems with infinite iteration when adding to it at the same time.
+			// Convert it to neutral, and add it to existingTypes
+			const raw = typeutil.getRawType(type);
+			types.add(raw + ext.N)
 		}
 	}
 

@@ -43,14 +43,8 @@ function setupVariant(gamefile, metadata, options) {
  */
 function initExistingTypes(gamefile) {
 	if (gamefile.editor) { // Editor mode may add any available piece type to the board
-		const types = [];
 		// Repeat each raw type for every single player in the game.
-		for (const player of players) {
-			for (const type of rawTypes) {
-				types.push(typeutil.buildType(type, player));
-			}
-		}
-		gamefile.startSnapshot.existingTypes = types;
+		gamefile.startSnapshot.existingTypes = typeutil.buildAllTypesForPlayers(Object.values(players), Object.values(rawTypes));
 		gamefile.startSnapshot.existingRawTypes = Object.values(rawTypes);
 		return;
 	}

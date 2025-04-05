@@ -114,6 +114,17 @@ function splitType(type: number): [RawType, Player] {
 	return [getRawType(type), getColorFromType(type)];
 }
 
+/** Repeats each rawTypes for player color provided. */
+function buildAllTypesForPlayers(players: Player[], rawTypes: RawType[]): number[] {
+	const builtTypes: number[] = [];
+	for (let i = players.length - 1; i >= 0; i--) {
+		for (const r of rawTypes) {
+			builtTypes.push(buildType(r, players[i]));
+		}
+	}
+	return builtTypes;
+}
+
 // eslint-disable-next-line no-unused-vars
 function forEachPieceType(callback: (pieceType: number) => void, players: Player[], includePieces: RawType[]) {
 	for (let i = players.length - 1; i >= 0; i--) {
@@ -173,6 +184,7 @@ export default {
 	buildType,
 	splitType,
 	invertType,
+	buildAllTypesForPlayers,
 	forEachPieceType,
 	getRawTypeStr,
 	invertPlayer,

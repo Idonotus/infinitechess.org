@@ -7,9 +7,8 @@
 import gameutility from './gameutility.js';
 import { cancelAutoAFKResignTimer, cancelDisconnectTimer } from './afkdisconnect.js';
 
-/** @typedef {import('../TypeDefinitions.js').Game} Game */
-
-/** @typedef {import("../../socket/socketUtility.js").CustomWebSocket} CustomWebSocket */
+import type { Game } from '../TypeDefinitions.js';
+import type { CustomWebSocket } from '../../socket/socketUtility.js';
 
 /**
  * The method that fires when a client sends the 'joingame' command after refreshing the page.
@@ -17,10 +16,10 @@ import { cancelAutoAFKResignTimer, cancelDisconnectTimer } from './afkdisconnect
  * @param {CustomWebSocket} ws - Their new websocket
  * @param {Game | undefined} game - The game they are in, if they are in one.
  */
-function onJoinGame(ws, game) {
+function onJoinGame(ws: CustomWebSocket, game?: Game) {
 	if (!game) return; // They don't belong in a game
 
-	const colorPlayingAs = gameutility.doesSocketBelongToGame_ReturnColor(game, ws);
+	const colorPlayingAs = gameutility.doesSocketBelongToGame_ReturnColor(game, ws)!;
 	gameutility.subscribeClientToGame(game, ws, colorPlayingAs);
 
 	// Cancel the timer that auto loses them by AFK, IF IT is their turn!

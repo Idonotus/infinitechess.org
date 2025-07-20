@@ -23,6 +23,11 @@ import { sendNotify, sendSocketMessage } from '../../socket/sendSocketMessage.js
 
 import type { CustomWebSocket } from '../../socket/socketUtility.js';
 
+interface AcceptInviteMessage {
+	id: string
+	isPrivate: boolean
+}
+
 /**
  * Attempts to accept an invite of given id.
  * @param ws - The socket performing this action
@@ -34,7 +39,7 @@ function acceptInvite(ws: CustomWebSocket, messageContents: any, replyto: number
 	if (isSocketInAnActiveGame(ws)) return sendNotify(ws, "server.javascript.ws-already_in_game", { replyto });
 
 	if (!verifyMessageContents(messageContents)) return sendSocketMessage(ws, "general", "printerror", "Cannot cancel invite when incoming socket message body is in an invalid format!", replyto);
-	const { id, isPrivate } = messageContents;
+	const { id, isPrivate } = messageContents as AcceptInviteMessage;
 
 
 	// Does the invite still exist?

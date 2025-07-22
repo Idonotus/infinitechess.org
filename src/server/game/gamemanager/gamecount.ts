@@ -37,7 +37,7 @@ function broadcastGameCountToInviteSubs() {
  * Returns the active game count. This is the number of active games that are not yet over.
  * Games that have ended are retained for a short period of time
  * to allow disconnected players to reconnect and see the results.
- * @returns {number} The active game count
+ * @returns The active game count
  */
 function getActiveGameCount() {
 	return activeGameCount;

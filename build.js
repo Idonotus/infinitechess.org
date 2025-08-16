@@ -26,6 +26,7 @@ import { execSync } from 'node:child_process';
  * into their own bundle!
  */
 const entryPoints = [
+	'dist/client/scripts/esm/modifiers/atomic.js',
 	'dist/client/scripts/esm/game/main.js',
 	'dist/client/scripts/esm/components/header/header.js',
 	'dist/client/scripts/esm/views/index.js',

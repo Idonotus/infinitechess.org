@@ -11,18 +11,13 @@
  */
 
 
-
 import type { Coords } from "../../chess/util/coordutil.js";
-import type { Color } from "../../util/math.js";
+import type { Color } from "../../util/math/math.js";
 
-
-// @ts-ignore
-import bufferdata from "./bufferdata.js";
-// @ts-ignore
 import board from "./boardtiles.js";
+import primitives from "./primitives.js";
 // @ts-ignore
 import shapes from "./shapes.js";
-
 
 
 // Variables ------------------------------------------------------------------------------
@@ -223,7 +218,7 @@ function getDataTexture(inverted: boolean): number[] {
 		[left, right] = [right, left]; // Swap left and right
 		[bottom, top] = [top, bottom]; // Swap bottom and top
 	}
-	return bufferdata.getDataQuad_Texture(left, bottom, right, top, 0, 0, 1, 1);
+	return primitives.Quad_Texture(left, bottom, right, top, 0, 0, 1, 1);
 }
 
 /**
@@ -240,7 +235,7 @@ function getDataColoredTexture(color: Color, inverted: boolean): number[] {
 		[left, right] = [right, left]; // Swap left and right
 		[bottom, top] = [top, bottom]; // Swap bottom and top
 	}
-	return bufferdata.getDataQuad_ColorTexture(left, bottom, right, top, 0, 0, 1, 1, ...color);
+	return primitives.Quad_ColorTexture(left, bottom, right, top, 0, 0, 1, 1, ...color);
 }
 
 export default {

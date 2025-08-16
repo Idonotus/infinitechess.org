@@ -3,7 +3,7 @@
  */
 
 
-import type { Coords, CoordsKey } from '../../chess/util/coordutil.js';
+import type { Coords, CoordsKey, DoubleCoords } from '../../chess/util/coordutil.js';
 
 
 import space from '../misc/space.js';
@@ -19,18 +19,18 @@ import boardpos from './boardpos.js';
 import snapping from './highlights/snapping.js';
 import instancedshapes from './instancedshapes.js';
 import texturecache from '../../chess/rendering/texturecache.js';
-import math, { Color } from '../../util/math.js';
+import vectors from '../../util/math/vectors.js';
+import { Color } from '../../util/math/math.js';
 import typeutil from '../../chess/util/typeutil.js';
 import selection from '../chess/selection.js';
 import jsutil from '../../util/jsutil.js';
+import boardtiles from './boardtiles.js';
 // @ts-ignore
 import webgl from './webgl.js';
 // @ts-ignore
 import perspective from './perspective.js';
 // @ts-ignore
 import statustext from '../gui/statustext.js';
-// @ts-ignore
-import boardtiles from './boardtiles.js';
 
 
 // Variables --------------------------------------------------------------
@@ -162,7 +162,7 @@ function getImageInstanceData(): { instanceData: TypeGroup<number[]>, instanceDa
 		// Are we hovering over? If so, add the same data to instanceData_hovered
 		if (areWatchingMousePosition) {
 			for (const pointerWorld of pointerWorlds) {
-				if (math.chebyshevDistance(coordsWorld, pointerWorld) < halfWorldWidth) instanceData_hovered[type]!.push(...coordsWorld);
+				if (vectors.chebyshevDistance(coordsWorld, pointerWorld) < halfWorldWidth) instanceData_hovered[type]!.push(...coordsWorld);
 			}
 		}
 	}
@@ -171,7 +171,7 @@ function getImageInstanceData(): { instanceData: TypeGroup<number[]>, instanceDa
 }
 
 /** Returns a list of mini image coordinates that are all being hovered over by the provided world coords. */
-function getImagesBelowWorld(world: Coords, trackDists: boolean): { images: Coords[], dists?: number[] } {
+function getImagesBelowWorld(world: DoubleCoords, trackDists: boolean): { images: Coords[], dists?: number[] } {
 	const imagesHovered: Coords[] = [];
 	const dists: number[] = [];
 
@@ -187,10 +187,10 @@ function getImagesBelowWorld(world: Coords, trackDists: boolean): { images: Coor
 
 	function processPiece(coords: Coords) {
 		const coordsWorld = space.convertCoordToWorldSpace(coords);
-		if (math.chebyshevDistance(coordsWorld, world) < halfWorldWidth) {
+		if (vectors.chebyshevDistanceDoubles(coordsWorld, world) < halfWorldWidth) {
 			imagesHovered.push(coords);
 			// Upgrade the distance to euclidean
-			if (trackDists) dists.push(math.euclideanDistance(coordsWorld, world));
+			if (trackDists) dists.push(vectors.euclideanDistanceDoubles(coordsWorld, world));
 		}
 	}
 
@@ -224,7 +224,7 @@ function getAllPiecesBelowAnnotePoints(): Piece[] {
 		const segmentPos = animation.getCurrentSegment(a, maxDistB4Teleport);
 		const currentAnimationPosition = animation.getCurrentAnimationPosition(a.segments, segmentPos);
 		// Add the main animated piece
-		pushPieceNoDuplicatesOrVoids({coords: currentAnimationPosition, type: a.type, index: -1});
+		pushPieceNoDuplicatesOrVoids({ coords: currentAnimationPosition, type: a.type, index: -1 });
 		// Add the captured pieces being shown
 		animation.forEachActiveKeyframe(a.showKeyframes, segmentPos, pieces => pieces.forEach(pushPieceNoDuplicatesOrVoids));
 		// Construct the hidden pieces for below

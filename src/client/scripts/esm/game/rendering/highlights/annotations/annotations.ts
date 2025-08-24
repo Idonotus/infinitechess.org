@@ -6,6 +6,9 @@
  * * Rays
  */
 
+import type { Coords } from "../../../../chess/util/coordutil.js";
+import type { Ray } from "../../../../util/math/vectors.js";
+
 import drawsquares from "./drawsquares.js";
 import preferences from "../../../../components/header/preferences.js";
 import gameslot from "../../../chess/gameslot.js";
@@ -14,13 +17,9 @@ import drawarrows from "./drawarrows.js";
 import gameloader from "../../../chess/gameloader.js";
 import drawrays from "./drawrays.js";
 import coordutil from "../../../../chess/util/coordutil.js";
-import { Mouse } from "../../../input.js";
-import mouse from "../../../../util/mouse.js";
 import boardeditor from "../../../misc/boardeditor.js";
+import bd from "../../../../util/bigdecimal/bigdecimal.js";
 
-
-import type { Coords } from "../../../../chess/util/coordutil.js";
-import type { Ray } from "../../../../util/math.js";
 
 
 // Type Definitions ------------------------------------------------------------
@@ -138,16 +137,6 @@ function update() {
 	drawrays.update(annotes.Rays);
 }
 
-/** Collapses all annotations if we clicked the board (outside of board editor drawing). */
-function testIfCollapsed() {
-	if (boardeditor.isBoardEditorUsingDrawingTool()) return; // Don't collapse if the board editor is using a drawing tool
-	
-	if (mouse.isMouseClicked(Mouse.LEFT)) {
-		mouse.claimMouseClick(Mouse.LEFT);
-		Collapse();
-	}
-}
-
 /**
  * Collapses all annotations. The behavior is:
  * A. Atleast 1 ray => Erase all rays and add more Squares at all their intersections.
@@ -158,7 +147,8 @@ function Collapse() {
 
 	if (annotes.Rays.length > 0) {
 		// Collapse rays instead of erasing all annotations.
-		const additionalSquares = drawrays.collapseRays(annotes.Rays, true);
+		// Can map to integer Coords since the argument we pass in ensures we only get back integer intersections.
+		const additionalSquares = drawrays.collapseRays(annotes.Rays, true).map((i) => bd.coordsToBigInt(i));
 		for (const newSquare of additionalSquares) {
 			// Avoid adding duplicates
 			if (annotes.Squares.every(s => !coordutil.areCoordsEqual(s, newSquare))) annotes.Squares.push(newSquare);
@@ -214,7 +204,6 @@ export default {
 	getRays,
 
 	update,
-	testIfCollapsed,
 	Collapse,
 	onPieceSelection,
 	onGameUnload,

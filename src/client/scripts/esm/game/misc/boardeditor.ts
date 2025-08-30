@@ -304,7 +304,7 @@ function redo() {
 }
 
 /**
- * copypastegame uses the move list instead of the position
+ * copygame uses the move list instead of the position
  * which doesn't work for the board editor.
  * This function uses the position of pieces on the board.
  */
@@ -336,8 +336,6 @@ function makeMoveEdit(gamefile: FullGame, mesh: Mesh | undefined, moveDraft: _Mo
 
 	movepiece.applyEdit(gamefile, edit, true, true); // forward & global are always true
 	if (mesh) movesequence.runMeshChanges(gamefile.boardsim, mesh, edit, true);
-
-	specialrighthighlights.onMove(); // Updates the model
 
 	addEditToHistory(edit);
 

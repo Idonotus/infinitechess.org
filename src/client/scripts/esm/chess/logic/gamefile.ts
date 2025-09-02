@@ -11,6 +11,7 @@ import type { GameState, GlobalGameState } from "./state.js";
 import type { VariantOptions } from "./initvariant.js";
 import type { ServerGameMoveMessage } from "../../../../../server/game/gamemanager/gameutility.js";
 import type { SpecialMoveFunction } from "./specialmove.js";
+import type { GameEvents } from "./events.js";
 
 import organizedpieces from "./organizedpieces.js";
 import initvariant from "./initvariant.js";
@@ -26,6 +27,7 @@ import checkdetection from "./checkdetection.js";
 import gamerules from "../variants/gamerules.js";
 // @ts-ignore
 import wincondition from "./wincondition.js";
+import atomic from "../../modifiers/atomic.js";
 
 interface Snapshot {
 	/** In key format 'x,y':'type' */
@@ -76,6 +78,7 @@ type Board = {
 	moves: Move[]
 	pieces: OrganizedPieces
 	state: GameState
+	events: GameEvents
 
 	colinearsPresent: boolean
 	pieceMovesets: RawTypeGroup<() => PieceMoveset>
@@ -191,6 +194,9 @@ function initBoard(gameRules: GameRules, metadata: MetaData, variantOptions?: Va
 		colinearsPresent,
 		pieceMovesets,
 		specialMoves,
+		events: {
+			draftMoves: []
+		},
 		...editorDependentVars
 	};
 }

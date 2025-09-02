@@ -45,6 +45,7 @@ import drawsquares from "../rendering/highlights/annotations/drawsquares.js";
 import drawrays from "../rendering/highlights/annotations/drawrays.js";
 import gamefile from "../../chess/logic/gamefile.js";
 import premoves from "./premoves.js";
+import modmanager from "../../modifiers/modmanager.js";
 import { animateMove } from "./graphicalchanges.js";
 // @ts-ignore
 import { gl } from "../rendering/webgl.js";
@@ -68,6 +69,7 @@ import winconutil from "../../chess/util/winconutil.js";
 
 /** Options for loading a game. */
 interface LoadOptions {
+	modlist?: [],
 	/** The metadata of the game */
 	metadata: MetaData,
 	/** True if we should be viewing the game from white's perspective, false for black's perspective. */
@@ -146,7 +148,7 @@ function isLoadedGameViewingWhitePerspective() {
  * This loads the logical stuff first, then returns a PROMISE that resolves
  * when the GRAPHICAL stuff is finished loading (such as the spritesheet).
  */
-function loadGamefile(loadOptions: LoadOptions): Promise<void> {
+async function loadGamefile(loadOptions: LoadOptions): Promise<void> {
 	if (loadedGamefile) throw new Error("Must unloadGame() before loading a new one.");
 	// console.log("Loading gamefile...");
 
@@ -156,10 +158,14 @@ function loadGamefile(loadOptions: LoadOptions): Promise<void> {
 	// but the loading animation should only be closed when
 	// both the LOGICAL and GRAPHICAL stuff are finished.
 
+	await modmanager.loadModList(loadOptions.modlist);
+
 	// First load the LOGICAL stuff...
 	loadLogical(loadOptions);
 	// console.log('Finished loading LOGICAL game stuff.');
 	
+	modmanager.setupModifiers(loadOptions.modlist, loadedGamefile!);
+
 	// Play the start game sound once LOGICAL stuff is finished loading,
 	// so that the sound will still play in chrome, with the tab hidden, and
 	// someone accepts your invite. (In that scenario, the graphical loading is blocked)

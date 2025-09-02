@@ -209,9 +209,7 @@ function initBoard(gameRules: GameRules, metadata: MetaData, variantOptions?: Va
 		colinearsPresent,
 		pieceMovesets,
 		specialMoves,
-		events: {
-			draftMoves: []
-		},
+		events: {},
 		worldBorder: worldBorderProperty,
 		...editorDependentVars
 	};

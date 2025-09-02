@@ -299,8 +299,8 @@ async function startBoardEditor() {
 		UTCDate: timeutil.getCurrentUTCDate(),
 		UTCTime: timeutil.getCurrentUTCTime()
 	};
-
-	gameslot.loadGamefile({
+	
+	await gameslot.loadGamefile({
 		metadata,
 		viewWhitePerspective: true,
 		allowEditCoords: true,
@@ -348,7 +348,7 @@ async function pasteGame(options: {
 
 	gameslot.unloadGame();
 
-	gameslot.loadGamefile({
+	await gameslot.loadGamefile({
 		metadata: options.metadata,
 		viewWhitePerspective,
 		allowEditCoords: guinavigation.areCoordsAllowedToBeEdited(),

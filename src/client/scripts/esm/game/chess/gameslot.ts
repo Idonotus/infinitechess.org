@@ -15,6 +15,7 @@ import type { ServerGameMoveMessage } from "../../../../../server/game/gamemanag
 import type { PresetAnnotes } from "../../chess/logic/icn/icnconverter.js";
 import type { FullGame } from "../../chess/logic/gamefile.js";
 import type { VariantOptions } from "../../chess/logic/initvariant.js";
+import type { GameEvents } from "../../chess/logic/events.js";
 
 import enginegame from '../misc/enginegame.js';
 import guinavigation from "../gui/guinavigation.js";
@@ -95,6 +96,7 @@ interface Additional {
 	 * It is NOT equidistant from all sides of the current position.
 	 */
 	worldBorder?: bigint,
+	events?: GameEvents,
 }
 
 // Variables ---------------------------------------------------------------
@@ -160,12 +162,13 @@ async function loadGamefile(loadOptions: LoadOptions): Promise<void> {
 	// both the LOGICAL and GRAPHICAL stuff are finished.
 
 	await modmanager.loadModList(loadOptions.modlist);
-
+	modmanager.setupModifiers(loadOptions);
+	
 	// First load the LOGICAL stuff...
 	loadLogical(loadOptions);
 	// console.log('Finished loading LOGICAL game stuff.');
 	
-	modmanager.setupModifiers(loadOptions.modlist, loadedGamefile!);
+	
 
 	// Play the start game sound once LOGICAL stuff is finished loading,
 	// so that the sound will still play in chrome, with the tab hidden, and

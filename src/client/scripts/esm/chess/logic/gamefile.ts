@@ -51,6 +51,7 @@ type Game = {
 	moves: BaseMove[]
 	gameRules: GameRules
 	whosTurn: Player
+	events: GameEvents
 	gameConclusion?: string
 } & ClockDependant
 
@@ -79,7 +80,6 @@ type Board = {
 	moves: Move[]
 	pieces: OrganizedPieces
 	state: GameState
-	events: GameEvents
 
 	colinearsPresent: boolean
 	pieceMovesets: RawTypeGroup<() => PieceMoveset>
@@ -122,7 +122,7 @@ type FullGame = {
 }
 
 /** Creates a new {@link Game} object from provided arguments */
-function initGame(metadata: MetaData, variantOptions?: VariantOptions, gameConclusion?: string, clockValues?: ClockValues): Game {
+function initGame(metadata: MetaData, variantOptions?: VariantOptions, gameConclusion?: string, clockValues?: ClockValues, events: GameEvents = {}): Game {
 	const gameRules = initvariant.getVariantGamerules(metadata, variantOptions);
 	const clockDependantVars: ClockDependant = clock.init(new Set(gameRules.turnOrder), metadata.TimeControl);
 	const game: Game = {
@@ -131,6 +131,7 @@ function initGame(metadata: MetaData, variantOptions?: VariantOptions, gameConcl
 		gameRules,
 		whosTurn: gameRules.turnOrder[0]!,
 		gameConclusion,
+		events,
 		...clockDependantVars,
 	};
 	
@@ -209,7 +210,6 @@ function initBoard(gameRules: GameRules, metadata: MetaData, variantOptions?: Va
 		colinearsPresent,
 		pieceMovesets,
 		specialMoves,
-		events: {},
 		worldBorder: worldBorderProperty,
 		...editorDependentVars
 	};
@@ -242,7 +242,7 @@ function loadGameWithBoard(basegame: Game, boardsim: Board, moves: ServerGameMov
  * Used on just the client.
  */
 function initFullGame(metadata: MetaData, additional: Additional = {}): FullGame {
-	const basegame = initGame(metadata, additional.variantOptions, additional.gameConclusion, additional.clockValues);
+	const basegame = initGame(metadata, additional.variantOptions, additional.gameConclusion, additional.clockValues, additional.events);
 	const boardsim = initBoard(basegame.gameRules, basegame.metadata, additional.variantOptions, additional.editor, additional.worldBorder);
 	return loadGameWithBoard(basegame, boardsim, additional.moves, additional.gameConclusion);
 }

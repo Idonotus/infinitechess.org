@@ -17,16 +17,13 @@ import { onReport, reportschem } from './cheatreport.js';
 import { resyncToGame } from './resync.js';
 import { submitMove, submitmoveschem } from './movesubmission.js';
 import { onJoinGame } from './joingame.js';
-import { sendSocketMessage } from '../../socket/sendSocketMessage.js';
-import { logEventsAndPrint } from '../../middleware/logEvents.js';
-import socketUtility from '../../socket/socketUtility.js';
 
 import type { CustomWebSocket } from '../../socket/socketUtility.js';
 
 
 const GameSchema = z.discriminatedUnion('action', [
 	z.strictObject({ action: z.literal('abort') }),
-	z.strictObject({ action: z.literal('resync'), 	 value: z.int() }),
+	z.strictObject({ action: z.literal('resync'), 	  value: z.int() }),
 	z.strictObject({ action: z.literal('AFK') }),
 	z.strictObject({ action: z.literal('AFK-Return') }),
 	z.strictObject({ action: z.literal('offerdraw') }),
@@ -64,9 +61,8 @@ function routeGameMessage(ws: CustomWebSocket, contents: GameMessage, id: number
 
 	const game = getGameBySocket(ws); // The game they belong in, if they belong in one.
 	if (!game) {
-		sendSocketMessage(ws, "general", "notifyerror", "Must be in a game to perform this action. This is a bug, please report it!");
-		const errMsg = `In game route, cannot perform action "${contents.action}" when player is not in a game! Websocket metadata: ${socketUtility.stringifySocketMetadata(ws)}`;
-		logEventsAndPrint(errMsg, 'errLog.txt');
+		// This is rare but can happen if the game is deleted on the server while their message is in transit.
+		console.log(`Received game message of action "${contents.action}" when player is not in a game. Maybe it was just deleted?`);
 		return;
 	}
 

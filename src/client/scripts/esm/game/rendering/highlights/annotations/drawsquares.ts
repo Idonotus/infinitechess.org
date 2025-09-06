@@ -6,23 +6,24 @@
  */
 
 import coordutil from "../../../../chess/util/coordutil.js";
-import math, { Color } from "../../../../util/math.js";
 import space from "../../../misc/space.js";
-import { BufferModelInstanced, createModel_Instanced } from "../../buffermodel.js";
-import instancedshapes from "../../instancedshapes.js";
 import preferences from "../../../../components/header/preferences.js";
 import snapping from "../snapping.js";
 import boardpos from "../../boardpos.js";
 import mouse from "../../../../util/mouse.js";
+import vectors from "../../../../util/math/vectors.js";
+import variant from "../../../../chess/variants/variant.js";
+import gameslot from "../../../chess/gameslot.js";
+import squarerendering from "../squarerendering.js";
+import bd from "../../../../util/bigdecimal/bigdecimal.js";
 import { Mouse } from "../../../input.js";
 // @ts-ignore
 import guipause from "../../../gui/guipause.js";
 
 
-import type { Coords } from "../../../../chess/util/coordutil.js";
+import type { Color } from "../../../../util/math/math.js";
+import type { Coords, DoubleCoords } from "../../../../chess/util/coordutil.js";
 import type { Square } from "./annotations.js";
-import variant from "../../../../chess/variants/variant.js";
-import gameslot from "../../../chess/gameslot.js";
 
 
 // Variables -----------------------------------------------------------------
@@ -54,7 +55,7 @@ const hover_opacity = 0.5;
 function getAllSquaresHovered(highlights: Square[]): Coords[] {
 	const allHovered: Square[] = [];
 	for (const pointerId of mouse.getRelevantListener().getAllPointerIds()) {
-		const pointerWorld: Coords = mouse.getPointerWorld(pointerId)!;
+		const pointerWorld: DoubleCoords = mouse.getPointerWorld(pointerId)!;
 		const hovered = getSquaresBelowWorld(highlights, pointerWorld, false).squares;
 		hovered.forEach(coords => {
 			// Prevent duplicates
@@ -65,7 +66,7 @@ function getAllSquaresHovered(highlights: Square[]): Coords[] {
 }
 
 /** Returns a list of Square highlight coordinates that are all being hovered over by the provided world coords. */
-function getSquaresBelowWorld(highlights: Square[], world: Coords, trackDists: boolean): { squares: Coords[], dists?: number[] } {
+function getSquaresBelowWorld(highlights: Square[], world: DoubleCoords, trackDists: boolean): { squares: Coords[], dists?: number[] } {
 	const squares: Square[] = [];
 	const dists: number[] = [];
 
@@ -73,12 +74,12 @@ function getSquaresBelowWorld(highlights: Square[], world: Coords, trackDists: b
 
 	// Iterate through each highlight to see if the mouse world is within ENTITY_WIDTH_VPIXELS of it
 	highlights.forEach(coords => {
-		const coordsWorld = space.convertCoordToWorldSpace(coords);
-		const dist_cheby = math.chebyshevDistance(coordsWorld, world);
+		const coordsWorld = space.convertCoordToWorldSpace(bd.FromCoords(coords));
+		const dist_cheby = vectors.chebyshevDistanceDoubles(coordsWorld, world);
 		if (dist_cheby < entityHalfWidthWorld) {
 			squares.push(coords);
 			// Upgrade the distance to euclidean
-			if (trackDists) dists.push(math.euclideanDistance(coordsWorld, world));
+			if (trackDists) dists.push(vectors.euclideanDistanceDoubles(coordsWorld, world));
 		}
 	});
 
@@ -96,7 +97,7 @@ function update(highlights: Square[]) {
 	// If the pointer simulated a right click, add a highlight!
 	if (mouse.isMouseClicked(Mouse.RIGHT)) {
 		mouse.claimMouseClick(Mouse.RIGHT); // Claim the click so other scripts don't also use it
-		const pointerWorld: Coords = mouse.getMouseWorld(Mouse.RIGHT)!;
+		const pointerWorld: DoubleCoords = mouse.getMouseWorld(Mouse.RIGHT)!;
 		const pointerSquare: Coords = space.convertWorldSpaceToCoords_Rounded(pointerWorld);
 
 		const closestEntityToWorld = snapping.getClosestEntityToWorld(pointerWorld);
@@ -148,28 +149,14 @@ function clearPresetOverrides() {
 // Rendering -----------------------------------------------------------------
 
 
-function genModel(highlights: Square[], color: Color): BufferModelInstanced {
-	const vertexData: number[] = instancedshapes.getDataLegalMoveSquare(color);
-	const instanceData: number[] = [];
-
-	highlights.forEach(coords => {
-		// const worldLoc = space.convertCoordToWorldSpace_IgnoreSquareCenter(coords);
-		const worldLoc = space.convertCoordToWorldSpace(coords);
-		instanceData.push(...worldLoc);
-	});
-
-	return createModel_Instanced(vertexData, instanceData, 'TRIANGLES', true);
-}
-
-
 function render(highlights: Square[]) {
 	const presetSquares = preset_squares ?? variant.getSquarePresets(gameslot.getGamefile()!.basegame.metadata.Variant);
 
 	// If we're zoomed out, then the size of the highlights is constant.
-	const size = boardpos.areZoomedOut() ? snapping.getEntityWidthWorld() : boardpos.getBoardScale();
+	const size = boardpos.areZoomedOut() ? snapping.getEntityWidthWorld() : boardpos.getBoardScaleAsNumber();
 
 	// Render preset squares (only if zoomed in)
-	if (!boardpos.areZoomedOut() && presetSquares.length > 0) genModel(presetSquares, PRESET_SQUARE_COLOR).render(undefined, undefined, { size });
+	if (!boardpos.areZoomedOut() && presetSquares.length > 0) squarerendering.genModel(presetSquares, PRESET_SQUARE_COLOR).render(undefined, undefined, { size });
 
 	// Early exit if no drawn-squares to draw
 	if (highlights.length === 0) return;
@@ -178,7 +165,7 @@ function render(highlights: Square[]) {
 	const color = preferences.getAnnoteSquareColor();
 	color[3] += OPACITY_OFFSET; // Add opacity offset to make it more visible than rays
 
-	genModel(highlights, color).render(undefined, undefined, { size });
+	squarerendering.genModel(highlights, color).render(undefined, undefined, { size });
 
 	// Render hovered highlights
 
@@ -188,7 +175,7 @@ function render(highlights: Square[]) {
 	if (allHovered.length > 0) {
 		const hoverColor = preferences.getAnnoteSquareColor();
 		hoverColor[3] = hover_opacity;
-		genModel(allHovered, hoverColor).render(undefined, undefined, { size });
+		squarerendering.genModel(allHovered, hoverColor).render(undefined, undefined, { size });
 	}
 }
 

@@ -8,7 +8,7 @@ import { rawTypes } from '../util/typeutil.js';
 
 import type { RawTypeGroup } from '../util/typeutil.js';
 import type { Coords } from '../util/coordutil.js';
-import type { Move } from './movepiece.js';
+import type { Edit, MoveDraft } from './movepiece.js';
 import type { Piece } from '../util/boardutil.js';
 import type { Board } from './gamefile.js';
 
@@ -19,7 +19,10 @@ import type { Board } from './gamefile.js';
  * Function that queues all of the changes a special move makes when executed.
  */
 // eslint-disable-next-line no-unused-vars
-type SpecialMoveFunction = (boardsim: Board, piece: Piece, move: Move) => boolean;
+type SpecialMoveFunction = (boardsim: Board, piece: Piece, move: MoveDraftEdit) => boolean;
+
+/** All properties of the Move that special move functions need to access */
+interface MoveDraftEdit extends MoveDraft, Edit {}
 
 /**
  * An object storing the squares in the immediate vicinity
@@ -54,7 +57,7 @@ const defaultSpecialMoves: RawTypeGroup<SpecialMoveFunction> = {
 // Called when the piece moved is a king.
 // Tests if the move contains "castle" special move, if so it executes it!
 // RETURNS FALSE if special move was not executed!
-function kings(boardsim: Board, piece: Piece, move: Move) {
+function kings(boardsim: Board, piece: Piece, move: MoveDraftEdit) {
 
 	const specialTag = move.castle; // { dir: -1/1, coord }
 	if (!specialTag) return false; // No special move to execute, return false to signify we didn't move the piece.
@@ -79,7 +82,7 @@ function kings(boardsim: Board, piece: Piece, move: Move) {
 	return true;
 }
 
-function pawns(boardsim: Board, piece: Piece, move: Move) {
+function pawns(boardsim: Board, piece: Piece, move: MoveDraftEdit) {
 	const moveChanges = move.changes;
 
 	// If it was a double push, then queue adding the new enpassant square to the gamefile!
@@ -110,7 +113,7 @@ function pawns(boardsim: Board, piece: Piece, move: Move) {
 }
 
 // The Roses need a custom special move function so that it can pass the `path` special flag to the move changes.
-function roses(boardsim: Board, piece: Piece, move: Move) {
+function roses(boardsim: Board, piece: Piece, move: MoveDraftEdit) {
 	const capturedPiece = boardutil.getPieceFromCoords(boardsim.pieces, move.endCoords);
 
 	// Delete the piece captured
@@ -129,9 +132,9 @@ function roses(boardsim: Board, piece: Piece, move: Move) {
  */
 function getDefaultSpecialVicinitiesByPiece(): SpecialVicinity {
 	return {
-		[rawTypes.PAWN]: [[-1,1],[1,1],[-1,-1],[1,-1]], // All squares a pawn could potentially capture on.
+		[rawTypes.PAWN]: [[-1n,1n],[1n,1n],[-1n,-1n],[1n,-1n]], // All squares a pawn could potentially capture on.
 		// All squares a rose piece could potentially capture on.
-		[rawTypes.ROSE]: [[-2,-1],[-3,-3],[-2,-5],[0,-6],[2,-5],[3,-3],[2,-1],[-4,0],[-5,2],[-4,4],[-2,5],[0,4],[1,2],[-1,-2],[0,-4],[4,-4],[5,-2],[4,0],[2,1],[-5,-2],[-6,0],[-3,3],[-1,2],[1,-2],[6,0],[5,2],[3,3],[-4,-4],[-2,1],[4,4],[2,5],[0,6]],
+		[rawTypes.ROSE]: [[-2n,-1n],[-3n,-3n],[-2n,-5n],[0n,-6n],[2n,-5n],[3n,-3n],[2n,-1n],[-4n,0n],[-5n,2n],[-4n,4n],[-2n,5n],[0n,4n],[1n,2n],[-1n,-2n],[0n,-4n],[4n,-4n],[5n,-2n],[4n,0n],[2n,1n],[-5n,-2n],[-6n,0n],[-3n,3n],[-1n,2n],[1n,-2n],[6n,0n],[5n,2n],[3n,3n],[-4n,-4n],[-2n,1n],[4n,4n],[2n,5n],[0n,6n]],
 	};
 }
 
@@ -141,6 +144,7 @@ export default {
 };	
 
 export type {
+	MoveDraftEdit,
 	SpecialMoveFunction,
-	SpecialVicinity
+	SpecialVicinity,
 };

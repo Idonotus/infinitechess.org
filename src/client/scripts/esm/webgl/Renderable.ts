@@ -12,7 +12,7 @@
  */
 
 
-import type { Vec3 } from '../../../../shared/util/math/vectors.js';
+import type { Vec3 } from '@shared/util/math/vectors.js';
 
 import { ShaderProgram } from './ShaderProgram.js';
 import { Attributes_All, ProgramManager, ProgramMap } from './ProgramManager.js';

@@ -8,11 +8,11 @@
  * on the bottom-right corner of the selection box.
  */
 
-import type { Coords, DoubleCoords } from "../../../../../../../shared/chess/util/coordutil";
+import type { Coords, DoubleCoords } from "@shared/chess/util/coordutil";
 
 import { Mouse } from "../../../input";
-import bounds, { BoundingBox, DoubleBoundingBox } from "../../../../../../../shared/util/math/bounds";
-import bimath from "../../../../../../../shared/util/bigdecimal/bimath";
+import bounds, { BoundingBox, DoubleBoundingBox } from "@shared/util/math/bounds";
+import bimath from "@shared/util/bigdecimal/bimath";
 import mouse from "../../../../util/mouse";
 import gameslot from "../../../chess/gameslot";
 import space from "../../../misc/space";
@@ -20,7 +20,7 @@ import arrows from "../../../rendering/arrows/arrows";
 import selectiontool from "./selectiontool";
 import stoolgraphics from "./stoolgraphics";
 import stransformations from "./stransformations";
-import vectors from "../../../../../../../shared/util/math/vectors";
+import vectors from "@shared/util/math/vectors";
 import sdrag from "./sdrag";
 import scursor from "./scursor";
 

@@ -5,13 +5,13 @@
  */
 
 
-import type { BDCoords, DoubleCoords } from "../../../../../shared/chess/util/coordutil.js";
+import type { BDCoords, DoubleCoords } from "@shared/chess/util/coordutil.js";
 
 import mouse from "../../util/mouse.js";
 import boardpos from "./boardpos.js";
 import guipromotion from "../gui/guipromotion.js";
-import vectors from "../../../../../shared/util/math/vectors.js";
-import coordutil from "../../../../../shared/chess/util/coordutil.js";
+import vectors from "@shared/util/math/vectors.js";
+import coordutil from "@shared/chess/util/coordutil.js";
 import perspective from "./perspective.js";
 import Transition from "./transitions/Transition.js";
 import drawarrows from "./highlights/annotations/drawarrows.js";
@@ -19,7 +19,7 @@ import drawrays from "./highlights/annotations/drawrays.js";
 import selection from "../chess/selection.js";
 import keybinds from "../misc/keybinds.js";
 import boardeditor from "../boardeditor/boardeditor.js";
-import bd, { BigDecimal } from "../../../../../shared/util/bigdecimal/bigdecimal.js";
+import bd, { BigDecimal } from "@shared/util/bigdecimal/bigdecimal.js";
 import { listener_overlay } from "../chess/game.js";
 
 

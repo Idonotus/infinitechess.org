@@ -10,19 +10,19 @@ import space from "../../../misc/space.js";
 import preferences from "../../../../components/header/preferences.js";
 import snapping from "../snapping.js";
 import mouse from "../../../../util/mouse.js";
-import vectors from "../../../../../../../shared/util/math/vectors.js";
-import geometry from "../../../../../../../shared/util/math/geometry.js";
+import vectors from "@shared/util/math/vectors.js";
+import geometry from "@shared/util/math/geometry.js";
 import boardpos from "../../boardpos.js";
 import camera from "../../camera.js";
 import { createRenderable } from "../../../../webgl/Renderable.js";
 import { Mouse } from "../../../input.js";
-import coordutil, { BDCoords, Coords, DoubleCoords } from "../../../../../../../shared/chess/util/coordutil.js";
-import bd, { BigDecimal } from "../../../../../../../shared/util/bigdecimal/bigdecimal.js";
+import coordutil, { BDCoords, Coords, DoubleCoords } from "@shared/chess/util/coordutil.js";
+import bd, { BigDecimal } from "@shared/util/bigdecimal/bigdecimal.js";
 
 
 import type { Arrow } from "./annotations.js";
-import type { Color } from "../../../../../../../shared/util/math/math.js";
-import type { BoundingBoxBD, DoubleBoundingBox } from "../../../../../../../shared/util/math/bounds.js";
+import type { Color } from "@shared/util/math/math.js";
+import type { BoundingBoxBD, DoubleBoundingBox } from "@shared/util/math/bounds.js";
 
 
 // Constants -----------------------------------------------------------------

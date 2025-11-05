@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 
 // Import your library's functions and types
 // Adjust the path './bigdecimal' if your file structure is different.
-import bigdecimal from '../../../../../shared/util/bigdecimal/bigdecimal.js';
+import bigdecimal from './bigdecimal.js';
 
 // --- Configuration ---
 const config = {

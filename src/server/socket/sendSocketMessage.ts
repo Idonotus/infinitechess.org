@@ -8,8 +8,8 @@ import { WebSocket } from "ws";
 
 import { addTimeoutToEchoTimers, deleteEchoTimerForMessageID, timeToWaitForEchoMillis } from "./echoTracker.js";
 import socketUtility from "./socketUtility.js";
-import uuid from "../../shared/util/uuid.js";
-import jsutil from "../../shared/util/jsutil.js";
+import uuid from "@shared/util/uuid.js";
+import jsutil from "@shared/util/jsutil.js";
 // @ts-ignore
 import { printIncomingAndOutgoingMessages, simulatedWebsocketLatencyMillis } from "../config/config.js";
 // @ts-ignore

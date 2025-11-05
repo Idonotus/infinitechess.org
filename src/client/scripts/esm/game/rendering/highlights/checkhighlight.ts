@@ -5,10 +5,10 @@
  */
 
 import space from '../../misc/space.js';
-import gamefileutility from '../../../../../../shared/chess/util/gamefileutility.js';
+import gamefileutility from '@shared/chess/util/gamefileutility.js';
 import preferences from '../../../components/header/preferences.js';
 import boardpos from '../boardpos.js';
-import bd from '../../../../../../shared/util/bigdecimal/bigdecimal.js';
+import bd from '@shared/util/bigdecimal/bigdecimal.js';
 import primitives from '../primitives.js';
 import { Renderable, createRenderable } from '../../../webgl/Renderable.js';
 
@@ -16,9 +16,9 @@ import { Renderable, createRenderable } from '../../../webgl/Renderable.js';
 // Type Definitions ----------------------------------------------------------------
 
 
-import type { Board } from '../../../../../../shared/chess/logic/gamefile.js';
-import type { BDCoords, Coords } from '../../../../../../shared/chess/util/coordutil.js';
-import type { Color } from '../../../../../../shared/util/math/math.js';
+import type { Board } from '@shared/chess/logic/gamefile.js';
+import type { BDCoords, Coords } from '@shared/chess/util/coordutil.js';
+import type { Color } from '@shared/util/math/math.js';
 
 
 // Functions -----------------------------------------------------------------------

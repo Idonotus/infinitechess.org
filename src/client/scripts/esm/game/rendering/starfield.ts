@@ -6,8 +6,8 @@
  */
 
 
-import type { Color } from '../../../../../shared/util/math/math.js';
-import type { DoubleCoords } from '../../../../../shared/chess/util/coordutil.js';
+import type { Color } from '@shared/util/math/math.js';
+import type { DoubleCoords } from '@shared/chess/util/coordutil.js';
 
 
 // @ts-ignore
@@ -18,13 +18,13 @@ import preferences from '../../components/header/preferences.js';
 import perspective from './perspective.js';
 import frametracker from './frametracker.js';
 import gameslot from '../chess/gameslot.js';
-import boardutil from '../../../../../shared/chess/util/boardutil.js';
+import boardutil from '@shared/chess/util/boardutil.js';
 import boardtiles from './boardtiles.js';
-import bounds from '../../../../../shared/util/math/bounds.js';
+import bounds from '@shared/util/math/bounds.js';
 import gameloader from '../chess/gameloader.js';
 import docutil from '../../util/docutil.js';
 import { AttributeInfoInstanced, createRenderable_Instanced_GivenInfo } from '../../webgl/Renderable.js';
-import { rawTypes as r } from '../../../../../shared/chess/util/typeutil.js';
+import { rawTypes as r } from '@shared/chess/util/typeutil.js';
 
 
 

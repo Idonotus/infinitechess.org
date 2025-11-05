@@ -9,14 +9,14 @@ import type { ProgramManager } from "../../webgl/ProgramManager";
 import frametracker from "./frametracker";
 import camera from "./camera";
 import space from "../misc/space";
-import bigdecimal from "../../../../../shared/util/bigdecimal/bigdecimal";
+import bigdecimal from "@shared/util/bigdecimal/bigdecimal";
 import boardpos from "./boardpos";
 import drawrays from "./highlights/annotations/drawrays";
-import bounds from "../../../../../shared/util/math/bounds";
+import bounds from "@shared/util/math/bounds";
 import perspective from "./perspective";
 import gameloader from "../chess/gameloader";
-import coordutil, { Coords } from "../../../../../shared/chess/util/coordutil";
-import { players as p } from "../../../../../shared/chess/util/typeutil";
+import coordutil, { Coords } from "@shared/chess/util/coordutil";
+import { players as p } from "@shared/chess/util/typeutil";
 import { RippleState, WaterRipplePass } from "../../webgl/post_processing/passes/WaterRipplePass";
 
 

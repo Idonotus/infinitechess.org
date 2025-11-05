@@ -8,18 +8,18 @@
  */
 
 // @ts-ignore
-import isprime from '../../../../../../shared/util/isprime.js';
-import insufficientmaterial from '../../../../../../shared/chess/logic/insufficientmaterial.js';
-import { rawTypes as r, ext as e, players, numTypes} from '../../../../../../shared/chess/util/typeutil.js';
-import organizedpieces from '../../../../../../shared/chess/logic/organizedpieces.js';
-import jsutil from '../../../../../../shared/util/jsutil.js';
+import isprime from '@shared/util/isprime.js';
+import insufficientmaterial from '@shared/chess/logic/insufficientmaterial.js';
+import { rawTypes as r, ext as e, players, numTypes} from '@shared/chess/util/typeutil.js';
+import organizedpieces from '@shared/chess/logic/organizedpieces.js';
+import jsutil from '@shared/util/jsutil.js';
 /**
  * Typescript types are erased during compilation, so adding these
  * here doesn't actually mean adding dependancies.
  */
-import type { Board, FullGame } from '../../../../../../shared/chess/logic/gamefile.js';
-import type { MoveDraft } from "../../../../../../shared/chess/logic/movepiece.js";
-import type { Coords, CoordsKey, DoubleCoords } from "../../../../../../shared/chess/util/coordutil.js";
+import type { Board, FullGame } from '@shared/chess/logic/gamefile.js';
+import type { MoveDraft } from "@shared/chess/logic/movepiece.js";
+import type { Coords, CoordsKey, DoubleCoords } from "@shared/chess/util/coordutil.js";
 // If the Webworker during creation is not declared as a module, than type imports will have to be imported this way:
 // type gamefile = import("../../chess/logic/gamefile").default;
 // type MoveDraft = import("../../chess/logic/movepiece").MoveDraft;

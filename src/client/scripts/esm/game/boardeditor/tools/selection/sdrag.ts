@@ -9,9 +9,9 @@
  */
 
 import { Mouse } from "../../../input";
-import coordutil, { Coords, DoubleCoords } from "../../../../../../../shared/chess/util/coordutil";
-import bimath from "../../../../../../../shared/util/bigdecimal/bimath";
-import bounds, { BoundingBox, DoubleBoundingBox } from "../../../../../../../shared/util/math/bounds";
+import coordutil, { Coords, DoubleCoords } from "@shared/chess/util/coordutil";
+import bimath from "@shared/util/bigdecimal/bimath";
+import bounds, { BoundingBox, DoubleBoundingBox } from "@shared/util/math/bounds";
 import mouse from "../../../../util/mouse";
 import gameslot from "../../../chess/gameslot";
 import space from "../../../misc/space";

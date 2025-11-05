@@ -5,17 +5,17 @@
  * Handles the Board Editor GUI
  */
 
-import type { Player } from "../../../../../../shared/chess/util/typeutil.js";
+import type { Player } from "@shared/chess/util/typeutil.js";
 import type { Tool } from "../../boardeditor/boardeditor.js";
 
 // @ts-ignore
 import statustext from "../statustext.js";
-import typeutil, { rawTypes, players } from "../../../../../../shared/chess/util/typeutil.js";
+import typeutil, { rawTypes, players } from "@shared/chess/util/typeutil.js";
 import gameloader from "../../chess/gameloader.js";
 import boardeditor from "../../boardeditor/boardeditor.js";
 import svgcache from "../../../chess/rendering/svgcache.js";
 import gameslot from "../../chess/gameslot.js";
-import icnconverter from "../../../../../../shared/chess/logic/icn/icnconverter.js";
+import icnconverter from "@shared/chess/logic/icn/icnconverter.js";
 import tooltips from "../../../util/tooltips.js";
 import eactions from "../../boardeditor/eactions.js";
 import drawingtool from "../../boardeditor/tools/drawingtool.js";

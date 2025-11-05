@@ -3,8 +3,8 @@
  * This script updates the checkmates_beaten list in the database when a user submits a newly completed checkmate
  */
 
-import validcheckmates from "../../shared/chess/util/validcheckmates.js";
-import jsutil from "../../shared/util/jsutil.js";
+import validcheckmates from "@shared/chess/util/validcheckmates.js";
+import jsutil from "@shared/util/jsutil.js";
 import { logEventsAndPrint } from "../middleware/logEvents.js";
 // @ts-ignore
 import { getMemberDataByCriteria, updateMemberColumns } from '../database/memberManager.js';

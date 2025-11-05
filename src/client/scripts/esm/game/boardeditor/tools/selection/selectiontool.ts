@@ -7,7 +7,7 @@
  * Acts similarly to that of Google Sheets
  */
 
-import type { Coords } from "../../../../../../../shared/chess/util/coordutil";
+import type { Coords } from "@shared/chess/util/coordutil";
 
 import mouse from "../../../../util/mouse";
 import arrows from "../../../rendering/arrows/arrows";
@@ -15,13 +15,13 @@ import stoolgraphics from "./stoolgraphics";
 import space from "../../../misc/space";
 import { Mouse } from "../../../input";
 import { listener_document, listener_overlay } from "../../../chess/game";
-import bounds, { BoundingBox, BoundingBoxBD, DoubleBoundingBox } from "../../../../../../../shared/util/math/bounds";
+import bounds, { BoundingBox, BoundingBoxBD, DoubleBoundingBox } from "@shared/util/math/bounds";
 import meshes from "../../../rendering/meshes";
-import bimath from "../../../../../../../shared/util/bigdecimal/bimath";
+import bimath from "@shared/util/bigdecimal/bimath";
 import sfill from "./sfill";
 import sdrag from "./sdrag";
 import guiboardeditor from "../../../gui/boardeditor/guiboardeditor";
-import boardutil from "../../../../../../../shared/chess/util/boardutil";
+import boardutil from "@shared/chess/util/boardutil";
 import gameslot from "../../../chess/gameslot";
 import boardeditor from "../../boardeditor";
 import stransformations from "./stransformations";

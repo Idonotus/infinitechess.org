@@ -8,20 +8,20 @@
  * selection from the Selection Tool in the Board Editor
  */
 
-import type { BoundingBox } from "../../../../../../../shared/util/math/bounds";
-import type { FullGame } from "../../../../../../../shared/chess/logic/gamefile";
+import type { BoundingBox } from "@shared/util/math/bounds";
+import type { FullGame } from "@shared/chess/logic/gamefile";
 import type { Mesh } from "../../../rendering/piecemodels";
 
-import boardutil, { LineKey, Piece } from "../../../../../../../shared/chess/util/boardutil";
-import bd, { BigDecimal } from "../../../../../../../shared/util/bigdecimal/bigdecimal";
-import coordutil, { BDCoords, Coords } from "../../../../../../../shared/chess/util/coordutil";
+import boardutil, { LineKey, Piece } from "@shared/chess/util/boardutil";
+import bd, { BigDecimal } from "@shared/util/bigdecimal/bigdecimal";
+import coordutil, { BDCoords, Coords } from "@shared/chess/util/coordutil";
 import boardeditor, { Edit } from "../../boardeditor";
-import vectors, { Vec2 } from "../../../../../../../shared/util/math/vectors";
-import organizedpieces from "../../../../../../../shared/chess/logic/organizedpieces";
-import bounds from "../../../../../../../shared/util/math/bounds";
+import vectors, { Vec2 } from "@shared/util/math/vectors";
+import organizedpieces from "@shared/chess/logic/organizedpieces";
+import bounds from "@shared/util/math/bounds";
 import selectiontool from "./selectiontool";
-import bimath from "../../../../../../../shared/util/bigdecimal/bimath";
-import typeutil from "../../../../../../../shared/chess/util/typeutil";
+import bimath from "@shared/util/bigdecimal/bimath";
+import typeutil from "@shared/chess/util/typeutil";
 
 
 // Type Definitions ----------------------------------------------------------

@@ -5,19 +5,19 @@
  */
 
 import type { AttributeInfo, Renderable, TextureInfo } from '../../webgl/Renderable.js';
-import type { Color } from '../../../../../shared/util/math/math.js';
-import type { BDCoords, DoubleCoords } from '../../../../../shared/chess/util/coordutil.js';
-import type { BigDecimal } from '../../../../../shared/util/bigdecimal/bigdecimal.js';
-import type { BoundingBox, BoundingBoxBD } from '../../../../../shared/util/math/bounds.js';
+import type { Color } from '@shared/util/math/math.js';
+import type { BDCoords, DoubleCoords } from '@shared/chess/util/coordutil.js';
+import type { BigDecimal } from '@shared/util/bigdecimal/bigdecimal.js';
+import type { BoundingBox, BoundingBoxBD } from '@shared/util/math/bounds.js';
 
 // @ts-ignore
 import style from '../gui/style.js';
 import camera from './camera.js';
 import checkerboardgenerator from '../../chess/rendering/checkerboardgenerator.js';
-import jsutil from '../../../../../shared/util/jsutil.js';
+import jsutil from '@shared/util/jsutil.js';
 import imagecache from '../../chess/rendering/imagecache.js';
 import frametracker from './frametracker.js';
-import gamefileutility from '../../../../../shared/chess/util/gamefileutility.js';
+import gamefileutility from '@shared/chess/util/gamefileutility.js';
 import gameslot from '../chess/gameslot.js';
 import preferences from '../../components/header/preferences.js';
 import piecemodels from './piecemodels.js';
@@ -25,11 +25,11 @@ import guipromotion from '../gui/guipromotion.js';
 import spritesheet from './spritesheet.js';
 import boardpos from './boardpos.js';
 import texturecache from '../../chess/rendering/texturecache.js';
-import bd from '../../../../../shared/util/bigdecimal/bigdecimal.js';
+import bd from '@shared/util/bigdecimal/bigdecimal.js';
 import primitives from './primitives.js';
 import TextureLoader from '../../webgl/TextureLoader.js';
 import perspective from './perspective.js';
-import math from '../../../../../shared/util/math/math.js';
+import math from '@shared/util/math/math.js';
 import webgl, { gl } from './webgl.js';
 import { createRenderable, createRenderable_GivenInfo } from '../../webgl/Renderable.js';
 

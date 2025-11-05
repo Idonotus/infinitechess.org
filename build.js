@@ -17,6 +17,7 @@ import { glob } from 'glob';
 import esbuild from 'esbuild';
 import path from "node:path";
 import stripComments from 'glsl-strip-comments';
+import { replaceTscAliasPaths } from 'tsc-alias';
 
 // Local imports
 import { getAllFilesInDirectoryWithExtension, writeFile_ensureDirectory } from './src/server/utility/fileUtils.js';
@@ -120,6 +121,20 @@ const esbuildClientOptions = {
 	// allowOverwrite: true, // Not needed?
 	// minify: true, // Enable minification. SWC is more compact so we don't use esbuild's
 	plugins: [esbuildClientRebuildPlugin, GLSLMinifyPlugin],
+
+	alias: {
+		'@shared': './src/shared'
+	},
+};
+
+const aliasReplacePlugin = {
+	name: "alias-replace",
+	setup(build) {
+		build.onEnd(async(result) => {
+			if (result.errors.length > 0) return;
+			await replaceTscAliasPaths();
+		});
+	}
 };
 
 const esbuildServerOptions = {
@@ -130,7 +145,7 @@ const esbuildServerOptions = {
 	outdir: 'dist',
 	format: 'esm',
 	sourcemap: true, // Patches file paths from server console errors to the correct src/ file
-	plugins: [esbuildServerRebuildPlugin],
+	plugins: [esbuildServerRebuildPlugin, aliasReplacePlugin],
 };
 
 

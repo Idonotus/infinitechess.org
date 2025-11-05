@@ -7,13 +7,13 @@
  * Manages the game rules of the board editor position.
  */
 
-import type { Coords } from "../../../../../shared/chess/util/coordutil";
-import type { GameRules } from "../../../../../shared/chess/variants/gamerules";
+import type { Coords } from "@shared/chess/util/coordutil";
+import type { GameRules } from "@shared/chess/variants/gamerules";
 
-import { PlayerGroup, players, RawType } from "../../../../../shared/chess/util/typeutil";
-import { EnPassant, GlobalGameState } from "../../../../../shared/chess/logic/state";
-import icnconverter from "../../../../../shared/chess/logic/icn/icnconverter";
-import winconutil from "../../../../../shared/chess/util/winconutil";
+import { PlayerGroup, players, RawType } from "@shared/chess/util/typeutil";
+import { EnPassant, GlobalGameState } from "@shared/chess/logic/state";
+import icnconverter from "@shared/chess/logic/icn/icnconverter";
+import winconutil from "@shared/chess/util/winconutil";
 import gameslot from "../chess/gameslot";
 import guigamerules from "../gui/boardeditor/guigamerules";
 

@@ -24,7 +24,7 @@ import guipromotion from "../gui/guipromotion.js";
 import boarddrag from "../rendering/boarddrag.js";
 import boardpos from "../rendering/boardpos.js";
 import selection from "../chess/selection.js";
-import jsutil from "../../../../../shared/util/jsutil.js";
+import jsutil from "@shared/util/jsutil.js";
 import animation from "../rendering/animation.js";
 import specialrighthighlights from "../rendering/highlights/specialrighthighlights.js";
 import piecemodels from "../rendering/piecemodels.js";
@@ -32,14 +32,14 @@ import guinavigation from "../gui/guinavigation.js";
 import guigameinfo from "../gui/guigameinfo.js";
 import miniimage from "../rendering/miniimage.js";
 import boardeditor from "../boardeditor/boardeditor.js";
-import vectors from "../../../../../shared/util/math/vectors.js";
+import vectors from "@shared/util/math/vectors.js";
 import Transition from "../rendering/transitions/Transition.js";
 import { listener_document } from "../chess/game.js";
 
 
 import type { Mesh } from "../rendering/piecemodels.js";
-import type { DoubleCoords } from "../../../../../shared/chess/util/coordutil.js";
-import type { FullGame } from "../../../../../shared/chess/logic/gamefile.js";
+import type { DoubleCoords } from "@shared/chess/util/coordutil.js";
+import type { FullGame } from "@shared/chess/logic/gamefile.js";
 
 
 // Constants -------------------------------------------------------------------

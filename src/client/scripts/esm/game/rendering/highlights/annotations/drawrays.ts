@@ -6,7 +6,7 @@
  */
 
 
-import type { Color } from "../../../../../../../shared/util/math/math.js";
+import type { Color } from "@shared/util/math/math.js";
 
 import preferences from "../../../../components/header/preferences.js";
 import snapping from "../snapping.js";
@@ -16,15 +16,15 @@ import boardpos from "../../boardpos.js";
 import mouse from "../../../../util/mouse.js";
 import annotations from "./annotations.js";
 import selectedpiecehighlightline from "../selectedpiecehighlightline.js";
-import variant from "../../../../../../../shared/chess/variants/variant.js";
-import geometry, { BaseRay } from "../../../../../../../shared/util/math/geometry.js";
-import bd from "../../../../../../../shared/util/bigdecimal/bigdecimal.js";
+import variant from "@shared/chess/variants/variant.js";
+import geometry, { BaseRay } from "@shared/util/math/geometry.js";
+import bd from "@shared/util/bigdecimal/bigdecimal.js";
 import legalmovemodel from "../legalmovemodel.js";
 import meshes from "../../meshes.js";
 import highlightline, { Line } from "../highlightline.js";
 import { Mouse } from "../../../input.js";
-import coordutil, { BDCoords, Coords, DoubleCoords } from "../../../../../../../shared/chess/util/coordutil.js";
-import vectors, { Ray, Vec3 } from "../../../../../../../shared/util/math/vectors.js";
+import coordutil, { BDCoords, Coords, DoubleCoords } from "@shared/chess/util/coordutil.js";
+import vectors, { Ray, Vec3 } from "@shared/util/math/vectors.js";
 
 
 // Variables -----------------------------------------------------------------

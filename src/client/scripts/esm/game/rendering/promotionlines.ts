@@ -6,13 +6,13 @@
  */
 
 
-import type { Color } from '../../../../../shared/util/math/math.js';
+import type { Color } from '@shared/util/math/math.js';
 
 import boardtiles from './boardtiles.js';
 import gameslot from '../chess/gameslot.js';
 import boardpos from './boardpos.js';
-import bd from '../../../../../shared/util/bigdecimal/bigdecimal.js';
-import { players } from '../../../../../shared/chess/util/typeutil.js';
+import bd from '@shared/util/bigdecimal/bigdecimal.js';
+import { players } from '@shared/chess/util/typeutil.js';
 import { createRenderable } from '../../webgl/Renderable.js';
 import primitives from './primitives.js';
 import camera from './camera.js';

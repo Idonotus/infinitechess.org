@@ -5,12 +5,12 @@
  * Manages the GUI popup window for the Game Rules of the Board Editor
  */
 
-import type { Coords } from "../../../../../../shared/chess/util/coordutil";
+import type { Coords } from "@shared/chess/util/coordutil";
 
-import icnconverter from "../../../../../../shared/chess/logic/icn/icnconverter";
-import { RawType } from "../../../../../../shared/chess/util/typeutil";
-import jsutil from "../../../../../../shared/util/jsutil";
-import math from "../../../../../../shared/util/math/math";
+import icnconverter from "@shared/chess/logic/icn/icnconverter";
+import { RawType } from "@shared/chess/util/typeutil";
+import jsutil from "@shared/util/jsutil";
+import math from "@shared/util/math/math";
 import egamerules, { GameRulesGUIinfo } from "../../boardeditor/egamerules";
 
 

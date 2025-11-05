@@ -8,15 +8,15 @@
  * This tool can drag pieces around.
  */
 
-import type { Board, FullGame } from "../../../../../../shared/chess/logic/gamefile";
-import type { _Move_Compact } from "../../../../../../shared/chess/logic/icn/icnconverter";
+import type { Board, FullGame } from "@shared/chess/logic/gamefile";
+import type { _Move_Compact } from "@shared/chess/logic/icn/icnconverter";
 import type { Mesh } from "../../rendering/piecemodels";
 import type { Edit } from "../boardeditor";
 
-import movepiece from "../../../../../../shared/chess/logic/movepiece";
-import state from "../../../../../../shared/chess/logic/state";
-import boardutil from "../../../../../../shared/chess/util/boardutil";
-import coordutil from "../../../../../../shared/chess/util/coordutil";
+import movepiece from "@shared/chess/logic/movepiece";
+import state from "@shared/chess/logic/state";
+import boardutil from "@shared/chess/util/boardutil";
+import coordutil from "@shared/chess/util/coordutil";
 import movesequence from "../../chess/movesequence";
 import boardeditor from "../boardeditor";
 

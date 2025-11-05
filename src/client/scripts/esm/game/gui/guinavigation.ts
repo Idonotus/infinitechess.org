@@ -1,5 +1,5 @@
 
-import type { BDCoords } from '../../../../../shared/chess/util/coordutil.js';
+import type { BDCoords } from '@shared/chess/util/coordutil.js';
 
 // @ts-ignore
 import guipause from './guipause.js';
@@ -10,9 +10,9 @@ import statustext from './statustext.js';
 import onlinegame from '../misc/onlinegame/onlinegame.js';
 import frametracker from '../rendering/frametracker.js';
 import movesequence from '../chess/movesequence.js';
-import boardutil from '../../../../../shared/chess/util/boardutil.js';
+import boardutil from '@shared/chess/util/boardutil.js';
 import gameslot from '../chess/gameslot.js';
-import moveutil from '../../../../../shared/chess/util/moveutil.js';
+import moveutil from '@shared/chess/util/moveutil.js';
 import selection from '../chess/selection.js';
 import mouse from '../../util/mouse.js';
 import boardpos from '../rendering/boardpos.js';
@@ -23,9 +23,9 @@ import guiboardeditor from './boardeditor/guiboardeditor.js';
 import premoves from '../chess/premoves.js';
 import Transition from '../rendering/transitions/Transition.js';
 import space from '../misc/space.js';
-import bimath from '../../../../../shared/util/bigdecimal/bimath.js';
+import bimath from '@shared/util/bigdecimal/bimath.js';
 import { listener_document, listener_overlay } from '../chess/game.js';
-import bd, { BigDecimal } from '../../../../../shared/util/bigdecimal/bigdecimal.js';
+import bd, { BigDecimal } from '@shared/util/bigdecimal/bigdecimal.js';
 
 
 /**

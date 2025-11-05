@@ -7,9 +7,9 @@
 
 
 
-import type { FullGame } from '../../../../../shared/chess/logic/gamefile.js';
+import type { FullGame } from '@shared/chess/logic/gamefile.js';
 import type { Mesh } from '../rendering/piecemodels.js';
-import type { Color } from '../../../../../shared/util/math/math.js';
+import type { Color } from '@shared/util/math/math.js';
 
 // @ts-ignore
 import invites from '../misc/invites.js';
@@ -23,7 +23,7 @@ import guititle from '../gui/guititle.js';
 import droparrows from '../rendering/dragging/droparrows.js';
 import onlinegame from '../misc/onlinegame/onlinegame.js';
 import arrows from '../rendering/arrows/arrows.js';
-import clock from '../../../../../shared/chess/logic/clock.js';
+import clock from '@shared/chess/logic/clock.js';
 import animation from '../rendering/animation.js';
 import draganimation from '../rendering/dragging/draganimation.js';
 import selection from './selection.js';
@@ -49,7 +49,7 @@ import camera from '../rendering/camera.js';
 import primitives from '../rendering/primitives.js';
 import piecemodels from '../rendering/piecemodels.js';
 import keybinds from '../misc/keybinds.js';
-import bimath from '../../../../../shared/util/bigdecimal/bimath.js';
+import bimath from '@shared/util/bigdecimal/bimath.js';
 import WaterRipples from '../rendering/WaterRipples.js';
 import screenshake from '../rendering/screenshake.js';
 import webgl, { gl } from '../rendering/webgl.js';

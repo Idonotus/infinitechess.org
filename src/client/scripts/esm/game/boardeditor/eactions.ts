@@ -16,19 +16,19 @@
  */
 
 import type { ServerGameMoveMessage } from "../../../../../server/game/gamemanager/gameutility";
-import type { MetaData } from "../../../../../shared/chess/util/metadata";
-import type { EnPassant, GlobalGameState } from "../../../../../shared/chess/logic/state";
-import type { VariantOptions } from "../../../../../shared/chess/logic/initvariant";
+import type { MetaData } from "@shared/chess/util/metadata";
+import type { EnPassant, GlobalGameState } from "@shared/chess/logic/state";
+import type { VariantOptions } from "@shared/chess/logic/initvariant";
 
 // @ts-ignore
 import statustext from "../gui/statustext";
-import gamefile, { Additional, FullGame } from "../../../../../shared/chess/logic/gamefile";
-import icnconverter, { _Move_Out, LongFormatIn, LongFormatOut } from "../../../../../shared/chess/logic/icn/icnconverter";
+import gamefile, { Additional, FullGame } from "@shared/chess/logic/gamefile";
+import icnconverter, { _Move_Out, LongFormatIn, LongFormatOut } from "@shared/chess/logic/icn/icnconverter";
 import boardeditor, { Edit } from "./boardeditor";
-import organizedpieces, { OrganizedPieces } from "../../../../../shared/chess/logic/organizedpieces";
-import boardutil, { Piece } from "../../../../../shared/chess/util/boardutil";
-import coordutil, { Coords } from "../../../../../shared/chess/util/coordutil";
-import timeutil from "../../../../../shared/util/timeutil";
+import organizedpieces, { OrganizedPieces } from "@shared/chess/logic/organizedpieces";
+import boardutil, { Piece } from "@shared/chess/util/boardutil";
+import coordutil, { Coords } from "@shared/chess/util/coordutil";
+import timeutil from "@shared/util/timeutil";
 import docutil from "../../util/docutil";
 import gamecompressor, { SimplifiedGameState } from "../chess/gamecompressor";
 import gameformulator from "../chess/gameformulator";

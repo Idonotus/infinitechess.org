@@ -7,24 +7,24 @@
  */
 
 
-import type { FullGame } from "../../../../../shared/chess/logic/gamefile.js";
-import type { Edit, Move, MoveDraft} from "../../../../../shared/chess/logic/movepiece.js";
+import type { FullGame } from "@shared/chess/logic/gamefile.js";
+import type { Edit, Move, MoveDraft} from "@shared/chess/logic/movepiece.js";
 
 
 import gameslot from "./gameslot.js";
 import guinavigation from "../gui/guinavigation.js";
-import boardchanges from "../../../../../shared/chess/logic/boardchanges.js";
+import boardchanges from "@shared/chess/logic/boardchanges.js";
 import { animateMove, meshChanges } from "./graphicalchanges.js";
-import moveutil from "../../../../../shared/chess/util/moveutil.js";
+import moveutil from "@shared/chess/util/moveutil.js";
 import arrowlegalmovehighlights from "../rendering/arrows/arrowlegalmovehighlights.js";
 import piecemodels from "../rendering/piecemodels.js";
 import { Mesh } from "../rendering/piecemodels.js";
-import gamefileutility from "../../../../../shared/chess/util/gamefileutility.js";
+import gamefileutility from "@shared/chess/util/gamefileutility.js";
 import onlinegame from "../misc/onlinegame/onlinegame.js";
-import movepiece from "../../../../../shared/chess/logic/movepiece.js";
+import movepiece from "@shared/chess/logic/movepiece.js";
 import guigameinfo from "../gui/guigameinfo.js";
 import guiclock from "../gui/guiclock.js";
-import clock from "../../../../../shared/chess/logic/clock.js";
+import clock from "@shared/chess/logic/clock.js";
 import frametracker from "../rendering/frametracker.js";
 // @ts-ignore
 import stats from "../gui/stats.js";
